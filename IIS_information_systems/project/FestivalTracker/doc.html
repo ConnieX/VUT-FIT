@@ -1,0 +1,59 @@
+1. Festival: rezervace vstupenek na hudební festivaly
+Autoři
+Tomáš Oplatek xoplat01@stud.fit.vutbr.cz - CTO - implementace databáze; registrace a přihlášení do systému; vyhledávání festivalů a kapel; rezervace a vydání vstupenek; detaily o koncertu
+Monika Rosinská xrosin00@stud.fit.vutbr.cz - CEO - návrh aplikace; stránka, zakládání a správa kapel(interpretů), hudebníků, festivalů; přihlašování interpretů na festival (koncert); dokumentace
+
+URL aplikace
+http://www.stud.fit.vutbr.cz/~xautor01/IIS
+(pokud má aplikace více vstupních stránek, napište obdobně další URL)
+Uživatelé systému pro testování
+
+Administrátor:
+správa uživatelů (včetně odstranení) - UserAdministration (složka Admin)
+
+Pořadatel a výše:
+založení festivalu - složka Festivals: soubor CreateFestival
+správa festivalů - složka Festivals: soubory UsersFestival, EditFestival
+založení interpretů - složka Performers: soubory Create Performer
+správa interpretů - složka Performers: soubory EditPerformers, EditPerformer, AddArtistToPerformer
+přihlášení(odhlášení) interpreta na festival (tj. kocerty) - složka Concert: soubory CreateConcert; součástí správy festivalu
+vytvoření vstupenek - složka Festivals: soubory AddTickets
+
+Pokladní a výše:
+zrušení rezervace - 
+potvrzení rezervace(zaplacení) -
+vydání vstupenky
+
+Divák a výše:
+rezervace vstupenky - 
+správa rezervací - 
+přihlášení - 
+
+Neregistrovaný uživatel a výše: 
+zaplacení vstupenky -
+vyhledávání festivalů - 
+vyhledávání kapel(interpreta) - 
+registrace do systému - 
+rezervace bez registrace -
+
+
+Uveďte prosím existující zástupce všech rolí uživatelů.
+Login	Heslo	Role
+admin	admin	Administrátor
+prodavac	prodavac	Prodavač
+franta	franta	Zákazník
+(Diagram případů užití není nutné vkládat, pokud IS implementuje role a případy užití definované zadáním.)
+
+Implementace
+Stručná dokumentace k implementaci, která popisuje, které části projektu (např. PHP skripty) implementují jednotlivé případy použití.
+
+Databáze
+Zde vložte grafické schéma relační databáze (tabulek v databázi).
+
+Instalace
+Stručně popište:
+postup instalace na server,
+softwarové požadavky (verze PHP apod.),
+jak rozbalit, konfigurovat, inicializovat databázi, ...
+
+Známé problémy

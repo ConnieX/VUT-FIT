@@ -1,0 +1,176 @@
+﻿@using System.Web
+@using System.ComponentModel.DataAnnotations
+@using System.Security.Claims
+@using FestivalTracker.Data
+@using FestivalTracker.Services
+@inject NavigationManager NavigationManager
+@inject UserManager UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">FestivalTracker</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Domovská stránka
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/festivals" Match="NavLinkMatch.All">
+                <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Vyhledání festivalu
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/performers/search" Match="NavLinkMatch.All">
+                <span class="oi oi-microphone" aria-hidden="true"></span> Vyhledání umělců
+            </NavLink>
+        </li>
+        <AuthorizeView Policy="Admin">
+            <Authorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="admin/users">
+                        <span class="oi oi-person" aria-hidden="true"></span> Správa uživatelů
+                    </NavLink>
+                </li>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Policy="Organizer">
+            <Authorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="organizer/festivals">
+                        <span class="oi oi-musical-note" aria-hidden="true"></span> Správa festivlů
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="performers">
+                        <span class="oi oi-people" aria-hidden="true"></span> Správa umělců
+                    </NavLink>
+                </li>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Policy="Cashier">
+            <Authorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/reservations">
+                        <span class="oi oi-spreadsheet" aria-hidden="true"></span> Správa rezervací
+                    </NavLink>
+                </li>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView>
+            <Authorized>
+                <li class="nav-item px-3 d-block d-md-none">
+                    <NavLink class="nav-link" href="account">
+                        <span class="oi oi-cog" aria-hidden="true"></span> Nastavení účtu
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3 d-block d-md-none">
+                    <a class="nav-link" href="@CreateLogoutUri()">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span> Odhlásit
+                    </a>
+                </li>
+            </Authorized>
+            <NotAuthorized>
+                <li class="nav-item px-3 d-block d-md-none">
+                    <NavLink class="nav-link" href="loginpage">
+                        <span class="oi oi-account-login" aria-hidden="true"></span> Přihlášení
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3 d-block d-md-none">
+                    <NavLink class="nav-link" href="register">
+                        <span class="oi oi-person" aria-hidden="true"></span> Registrace
+                    </NavLink>
+                </li>
+            </NotAuthorized>
+        </AuthorizeView>
+    </ul>
+
+    <!-- Bottom part -->
+
+
+    <div class="nav p-3 bottom d-none d-md-block">
+        <AuthorizeView>
+            <Authorized>
+                <NavLink href="account">
+                    <div class="navbar-profile">
+                        <img alt="Blank profile image" src="images/blank_profile.png"/>
+                        @{var user = UserManager.CurrentUser;}
+                        @if (user != null) {
+                            <div>
+                                <div>@user.Person.Name @user.Person.Surname</div>
+                                <div>@user.Person.Email</div>
+                            </div>
+                        }
+
+                    </div>
+                </NavLink>
+                <button class="btn logout-btn" @onclick="LogOut">Odhlásit</button>
+            </Authorized>
+            <NotAuthorized>
+                <iframe style="display: none;" name="sub"></iframe>
+                <form @onsubmit="SubmitLogin" target="sub">
+                    <input type="text" placeholder="Email" @bind="Email" class="p-3 text-input form-control"/>
+                    <input type="password" placeholder="Heslo" @bind="Password" class="p-3 text-input mt-2 form-control"/>
+
+                    <div class="err-msg mt-1">
+                        @ErrMsg
+                    </div>
+                    <div class="mt-2 login-buttons">
+                        <a class="btn btn-light btn-normal login-btn" href="/register">Registrovat</a>
+                        <button class="btn btn-light btn-normal login-btn" type="submit">Přihlásit se</button>
+                    </div>
+                </form>
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+@code {
+    private bool _collapseNavMenu = true;
+
+    private string NavMenuCssClass => _collapseNavMenu ? "collapse" : null;
+    string Password { get; set; }
+    string Email { get; set; }
+    string ErrMsg { get; set; }
+
+    private void ToggleNavMenu() {
+        _collapseNavMenu = !_collapseNavMenu;
+    }
+
+
+    private string Encode(string param) {
+        return string.IsNullOrEmpty(param) ? "" : HttpUtility.UrlEncode(param);
+    }
+
+    private string CreateLogoutUri() {
+        var current = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        return "Logout?&redirect=" + Encode(current);
+    }
+
+
+    private void LogOut(MouseEventArgs args) {
+        NavigationManager.NavigateTo(CreateLogoutUri(), true);
+    }
+
+
+    private async Task SubmitLogin(EventArgs args) {
+        if (!await UserManager.CheckLoginAsync(Email, Password)) {
+            ErrMsg = "Incorrect email or password";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        var current = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        await UserManager.Login(Email, Password, current);
+    }
+
+}

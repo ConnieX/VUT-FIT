@@ -1,0 +1,97 @@
+@page "/performers/edit/{Id:int}"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@attribute [Authorize(Policy = "Organizer")]
+
+<div class="screen-center">
+    <iframe style="display: none;" name="sub"></iframe>
+    <div class="full-width vertical-center">
+        <h1>
+            Upravit kapelu @Database.Performer.Find(Id).Name
+        </h1>
+          <form @onsubmit="SubmitEdit" target="sub">
+              <div class="form-group">
+                  <label>Název: *</label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind=@performer.Name placeholder="Název" class="form-control text-input">
+                  </div>
+                  <label>Žánr:</label>
+                  <div class="input-group mb-2">
+                      <input @bind=@performer.Genre class="form-control text-input">
+                  </div>
+                  <label>Logo:</label>
+                  <div class="input-group mb-2">
+                      <input @bind=@performer.Logo class="form-control text-input">
+                  </div>
+                  <label>Hodnocení - počet ★:</label>
+                  <div class="input-group mb-2">
+                      <button type="button" class="btn dropdown-toggle btn-table-dropdown" style="width: 25%" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">@performer.Rating</button>
+                      <div class="dropdown-menu">
+                          <a class="dropdown-item" @onclick="_ => SetRating(1)" href="javascript:">1</a>
+                          <a class="dropdown-item" @onclick="_ => SetRating(2)" href="javascript:">2</a>
+                          <a class="dropdown-item" @onclick="_ => SetRating(3)" href="javascript:">3</a>
+                          <a class="dropdown-item" @onclick="_ => SetRating(4)" href="javascript:">4</a>
+                          <a class="dropdown-item" @onclick="_ => SetRating(5)" href="javascript:">5</a>
+                      </div>
+                      <br />
+                  </div>
+              </div>
+              <small class="form-text text-muted">* Tyto položky jsou povinné.</small>
+
+              <div class="mt-2">
+                  <button class="btn btn-outline-success" type="submit">Upravit kapelu</button>
+                  <button class="btn btn-normal btn-wide" onclick="window.location.href='/performers'">Zpět na seznam</button>
+              </div>
+              <div class="mt-1" style="color:red;">
+                  @ErrMsg
+              </div>
+              <div class="mt-1" style="color:lawngreen;">
+                  @SuccMsg
+              </div>
+          </form>
+    </div>
+</div>
+
+
+@code {
+    
+    [Parameter]
+    public int Id { get; set; }
+    
+    Performer performer = new Performer();
+
+    string ErrMsg { get; set; }
+    string SuccMsg { get; set; }
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        performer = Database.Performer.FirstOrDefault(x => x.Id == Id);
+        if (performer == default) {
+            Navigation.NavigateTo("/unauthorized");
+            return;
+        };
+    }
+
+    void SetRating(int stars) {
+        performer.Rating = stars;
+    }
+
+    private async Task SubmitEdit(){
+        if (string.IsNullOrEmpty(performer.Name)){
+            ErrMsg = "Zadejte prosím jméno kapely.";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        
+        Database.Performer.Update(performer);
+        Database.SaveChanges(); //We need this save to database to create the autoincrement ID
+        ErrMsg = "";
+        System.Threading.Thread.Sleep(1000);
+        SuccMsg = "Změny byly uloženy";
+        await InvokeAsync(StateHasChanged);
+    }
+}

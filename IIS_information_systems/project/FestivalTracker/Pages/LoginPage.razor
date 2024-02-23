@@ -1,0 +1,45 @@
+@page "/loginpage"
+@using FestivalTracker.Services
+@using Newtonsoft.Json
+@using System.Text
+
+@inject IJSRuntime JsRuntime
+@inject UserManager UserManager
+@inject NavigationManager NavigationManager
+
+
+<h3>Login</h3>
+
+<p>Please enter your email and password</p>
+<iframe style="display: none;" name="sub"></iframe>
+<form @onsubmit="SubmitLogin" target="sub" method="post">
+    
+    <input type="text" placeholder="Email" @bind="Email" class="p-3 form-control"/>
+    <input type="password" placeholder="Password" @bind="Password" class="p-3 mt-2 form-control"/>
+    <div class="err-msg mt-1">
+        @ErrMsg
+    </div>
+    <div class="mt-2">
+        <a class="btn btn-light" href="/register">Register</a>
+        <button class="btn btn-light" type="submit">Login</button>
+    </div>
+</form>
+
+@code {
+    string Password { get; set; }
+    string Email { get; set; }
+    string ErrMsg { get; set; }
+    
+
+    private async Task SubmitLogin(EventArgs args) {
+        if (!await UserManager.CheckLoginAsync(Email, Password)) {
+            ErrMsg = "Incorrect email or password";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        await UserManager.Login(Email, Password, "");
+    }
+
+    
+
+}

@@ -1,0 +1,100 @@
+@using FestivalTracker.Data
+@using System.Globalization
+@using FestivalTracker.Services
+@using Microsoft.EntityFrameworkCore.Scaffolding.Metadata
+@using Microsoft.EntityFrameworkCore.Storage
+@inject DatabaseContext Database;
+@inject UserManager Users;
+@inject IJSRuntime JsRuntime;
+@inject TicketManager TicketManager;
+@inject NavigationManager Nav;
+@inject CookieService Cookies;
+
+
+<div class="ticket-type-info">
+        @{ var count = 0; }
+        <div class="ticket-type-name">@Type.Name</div>
+        <div class="ticket-type-date">
+            @if (Type.ValidFrom.Date == Type.ValidTo.Date) {
+                @Type.ValidTo.ToString("dddd d. MMM", _culture)
+            }
+            else {
+                @Type.ValidFrom.ToString("d. MMM", _culture)
+                <span>&nbsp;-&nbsp;</span>
+                @Type.ValidTo.ToString("d. MMM", _culture)
+            }
+        </div>
+        <div class="ticket-type-remaining">@TicketCount Kusů</div>
+        <div class="ticket-type-price">@Type.Price Kč</div>
+        <div class="ticket-type-count">
+            <div class="input-group">
+                <input type="number" class="form-control number-input" @bind="@_count"  min="0" max="@_max">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" @onclick="_ => Reserve()" href="javascript:">Rezervovat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@code {
+    [Parameter]
+    public TicketType Type { get; set; }
+    [Parameter]
+    public int TicketCount { get; set; }
+
+    private int _max = 10;
+    
+    
+    int _count;
+
+    CultureInfo _culture;
+
+    private async Task Reserve() {
+        switch (_count) {
+            case 0:
+                return;
+            case < 0:
+                await JsRuntime.InvokeVoidAsync("alert", "Záporný počet lístků si opravdu nekoupíte");
+                return;
+            case > 10:
+                await JsRuntime.InvokeVoidAsync("alert", "Překonali jste maximální počet lístků (10)");
+                return;
+        }
+
+        TicketCount = TicketManager.GetRemainingCount(Type);
+        if (_count > TicketCount) {
+            await InvokeAsync(StateHasChanged);
+            await JsRuntime.InvokeVoidAsync("alert", "Tolik lístků již není k dispozici");
+
+            return;
+        }
+        var user = Users.CurrentUser;
+        
+        if (user == null) {
+            var reservation = TicketManager.CreateReservation(Users.DefaultReservation.Id, Type,  _count, TimeSpan.FromMinutes(5));
+            await Cookies.SetCookie("Reservation", reservation.Id.ToString(), TimeSpan.FromMinutes(5));
+            Nav.NavigateTo("/reservation/details");
+        }
+        else {
+            var reservation = TicketManager.CreateReservation(user.PersonId, Type,  _count, TimeSpan.FromDays(10));
+            await Cookies.SetCookie("Reservation", reservation.Id.ToString(), TimeSpan.FromDays(10));
+            Nav.NavigateTo("/reservation/payment");
+        }
+       
+        
+    }
+
+    private void Unregistered() {
+        Nav.NavigateTo("/reservation/details");
+
+    }
+
+    protected override void OnInitialized() {
+        _culture = new CultureInfo("cs-CZ");
+        base.OnInitialized();
+    }
+
+
+
+
+}

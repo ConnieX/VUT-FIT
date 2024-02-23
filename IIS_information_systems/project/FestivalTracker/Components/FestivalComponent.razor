@@ -1,0 +1,53 @@
+@using FestivalTracker.Data
+@using System.Globalization
+@inject NavigationManager Nav;
+
+@{ var navLink = "/Festivals/" + Festival.Id; }
+<a href="@navLink">
+    <div class="festival-item">
+        <div class="festival-name">@Festival.Name</div>
+        <div class="festival-price">
+            <div class="festival-price-buy">
+                <img src="images/tickets.png" alt="Obrázek lístku">
+            </div>
+            <div class="festival-price-remaining">
+                @if (Remaining == 0) {
+                    <span style="color: #cc0e00">VYPRODÁNO</span>
+                }
+                else {
+                    <span>Zbývá: @Remaining lístků od @MinPrice Kč</span>
+                }
+            </div>
+        </div>
+        <div class="festival-start d-none d-md-flex">Od: @Festival.StartDate.ToString("dddd d. MMM yyyy", Culture).FirstCharToUpper()</div>
+        <div class="festival-end d-none d-md-flex">Do: @Festival.EndDate.ToString("dddd d. MMM yyyy", Culture).FirstCharToUpper()</div>
+        <div class="festival-info">
+            <div class="festival-genre">Žánr: @Festival.Genre</div>
+            <div class="festival-location">@Festival.Place</div>
+          </div>
+    </div>
+</a>
+
+
+@code {
+
+    CultureInfo Culture { get; set; }
+
+    [Parameter]
+    public Festival Festival { get; set; }
+
+    private string MinPrice { get; set; }
+
+    [Parameter]
+    public int Remaining { get; set; }
+    
+
+    protected override void OnInitialized() {
+        Culture = new CultureInfo("cs-CZ");
+        MinPrice = Festival.TicketType.Count > 0 ? Festival.TicketType.Min(x => x.Price).ToString() : "-";
+            
+        
+        base.OnInitialized();
+    }
+
+}

@@ -1,0 +1,149 @@
+@page "/festivals/concerts/new/{Id:int}"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@inject IJSRuntime JsRuntime
+@attribute [Authorize(Policy = "Organizer")]
+
+<h1>Vytvoření nového koncertu na festivalu @Database.Festival.Find(Id).Name</h1>
+<h2>@Database.Festival.Find(Id).StartDate.Day . @Database.Festival.Find(Id).StartDate.Month  - 
+    @Database.Festival.Find(Id).EndDate.Day . @Database.Festival.Find(Id).EndDate.Month . @Database.Festival.Find(Id).StartDate.Year</h2>
+<div class="screen-center">
+    <iframe style="display: none;" name="sub"></iframe>
+    <div class="full-width vertical-center">
+        <form @onsubmit="SubmitCreation" target="sub">
+            <label>Vystupující: </label>
+            <button type="button" class="btn dropdown-toggle btn-table-dropdown" style="width: 25%" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">@perf</button>
+            <div class="dropdown-menu">
+                @foreach (var perform in Performers) {
+                    <a class="dropdown-item" @onclick="_ => SetPerf(perform)" href="javascript:">@perform.Name</a>
+                }
+            </div>
+            <br />
+            <label>Pódium: </label>
+            <div class="input-group mb-2">
+                <input type="number" class="form-control number-input" @bind="@podium">
+            </div>
+            <label>Začátek: </label>
+            <div class="input-group mb-2">
+                <input type="datetime-local" class="form-control text-input" @onchange="@(args => SetStart(args.Value))">
+            </div>
+            <label>Konec: </label>
+            <div class="input-group mb-2">
+                <input type="datetime-local" class="form-control text-input" @onchange="@(args => SetEnd(args.Value))">
+            </div>
+            <button class="btn btn-outline-success" type="submit" style="width: 200px" onclick="window.location.href='/festivals/concerts/@Id'">Vytvořit koncert</button>
+            <div class="mt-1" style="color:red;">
+                @ErrMsg
+            </div>
+        </form>
+            <button class="btn btn-normal" style="width: 200px" onclick="window.location.href='/festivals/concerts/@Id'">Zpět na seznam</button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set;}
+
+    Concert concert = new Concert();
+    List<Performer> Performers = new List<Performer>();
+    List<Concert> existingConcerts;
+    Festival festival;
+
+    DateTime start { get; set;}
+    DateTime end {get; set;}
+    int podium { get; set; }
+
+    string ErrMsg;
+
+    string perf = "";
+    
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        festival = Database.Festival.FirstOrDefault(x => x.Id == Id);
+        if (festival == default) {
+            Navigation.NavigateTo("/unauthorized");
+            return;
+        }
+        Performers = Database.Performer.ToList();
+        existingConcerts = Database.Concert.Where(x => x.FestivalId == Id).ToList();
+        concert.Start = Database.Festival.Find(Id).StartDate;
+        concert.End = Database.Festival.Find(Id).EndDate;
+        start = festival.StartDate;
+        end = festival.EndDate;
+    }
+    
+    private async Task SubmitCreation(EventArgs args) {
+        concert.Start = start;
+        concert.End = end;
+        concert.Number = podium;
+        Database.Concert.Add(concert);
+        Database.SaveChanges();
+        System.Threading.Thread.Sleep(1000);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void SetPerf(Performer performer) {
+        if (existingConcerts.Where(x => x.PerformerId == performer.Id).ToList().Count != 0) {
+            ErrMsg = "Tato kapela již na tomto festivalu vystupuje.";
+            InvokeAsync(StateHasChanged);
+            return;
+        }
+        Concert createConcert = new Concert() {
+            PerformerId = performer.Id, FestivalId = festival.Id
+        };
+        ErrMsg = "";
+        concert = createConcert;
+        concert.Performer = performer;
+        perf = performer.Name;
+        InvokeAsync(StateHasChanged);
+    }
+    
+    private void SetStart(object? startTime) {
+        if (startTime == null) {
+            start = DateTime.UnixEpoch;
+            return;
+        }
+        if (Database.Concert.Where(x => x.PerformerId == concert.PerformerId)
+            .Any(x => x.Start > DateTime.Parse((string)startTime) && x.End < DateTime.Parse((string)startTime)).ToString() != "") {
+            
+            ErrMsg = "Kapela v tuto dobu vystupuje na jiném festivalu";
+            InvokeAsync(StateHasChanged);
+            return;
+        }
+        if (DateTime.Parse((string)startTime) < festival.StartDate) {
+            ErrMsg = "Koncert nemůže začínat dříve než festival.";
+            InvokeAsync(StateHasChanged);
+            return;
+        }
+        ErrMsg = "";
+        start = DateTime.Parse((string)startTime);
+        InvokeAsync(StateHasChanged);
+    }
+    
+    private void SetEnd(object? endTime) {
+        if (endTime == null) {
+            end = DateTime.UnixEpoch;
+            return;
+        }
+        if (Database.Concert.Where(x => x.PerformerId == concert.PerformerId)
+            .Any(x => x.Start > DateTime.Parse((string)endTime) && x.End < DateTime.Parse((string)endTime)).ToString() != "") {
+            
+            ErrMsg = "Kapela v tuto dobu vystupuje na jiném festivalu";
+            InvokeAsync(StateHasChanged);
+            return;
+        }
+        if (DateTime.Parse((string)endTime) < festival.StartDate) {
+            ErrMsg = "Koncert nemůže začínat dříve než festival.";
+            InvokeAsync(StateHasChanged);
+            return;
+        }
+        ErrMsg = "";
+        end = DateTime.Parse((string)endTime);
+        InvokeAsync(StateHasChanged);
+    }
+}

@@ -1,0 +1,72 @@
+@page "/reservation/{Id:int}"
+@using FestivalTracker.Data
+@using FestivalTracker.Services
+@attribute [Authorize]
+@using System.Linq
+@using Microsoft.EntityFrameworkCore
+@inject DatabaseContext Database;
+@inject NavigationManager Nav;
+@inject UserManager UserManager
+
+<h3>Seznam lístků rezervace</h3>
+
+
+<table class="table table-hover ">
+    <thead>
+    <tr>
+        <th scope="col" style="width: 5%" class="text-center">#</th>
+        <th scope="col" style="width: 25%">Festival</th>
+        <th scope="col" style="width: 55%">Typ</th>
+        <th scope="col" style="width: 10%">Cena</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        var count = 0;
+    }
+    @foreach (var item in _reservation.Ticket) {
+        count++;
+        <tr>
+            <td class="text-center">@count</td>
+            <td>@_festival</td>
+            <td>@_type</td>
+            <td>@_price ,-</td>
+        </tr>
+    }
+    <tr>
+
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Celkem: @(_price * count) ,-</td>
+    </tr>
+    </tbody>
+</table>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    Reservation _reservation;
+
+    int _price;
+    string _festival;
+    string _type;
+
+    protected override void OnInitialized() {
+        var curr = UserManager.CurrentUser;
+        _reservation = Database.Reservation.Include(x => x.Ticket).FirstOrDefault(x => x.Id == Id && x.PersonId == curr.PersonId);
+        if (_reservation == default) {
+            Nav.NavigateTo("/unauthorized");
+        }
+        _festival = Database.Festival.Find(_reservation.Ticket.First().FestivalId).Name;
+        var tType = Database.TicketType.First(x => x.Id == _reservation.Ticket.First().TicketTypeId);
+        _type = tType.Name;
+        _price = (int)tType.Price;
+
+        base.OnInitialized();
+    }
+
+
+}

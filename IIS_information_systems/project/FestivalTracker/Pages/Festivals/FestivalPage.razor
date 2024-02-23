@@ -1,0 +1,75 @@
+@page "/festivals/{Id:int}"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@using System.Globalization
+@using FestivalTracker.Components
+@using Microsoft.EntityFrameworkCore
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject TicketManager Tickets
+@inject DatabaseContext Database;
+
+
+<h1 class="festival-bcg-img">@_fest.Name</h1>
+<h4 class="mt-2">
+    Termín: @_fest.StartDate.ToString("dddd d. MMM yyyy", _culture).FirstCharToUpper() až @_fest.EndDate.ToString("dddd d. MMM yyyy", _culture).FirstCharToUpper()
+</h4>
+<h4 class="mt-2">
+    Místo konání: @_fest.Place
+</h4>
+
+<h4 class="mt-2">
+    Žánr: @_fest.Genre
+</h4>
+
+<h4 class="mt-2">
+    Podrobnosti:
+</h4>
+<p>@_fest.Details</p>
+<h4 class="mt-4 mb-3">
+    Vstupenky:
+</h4>
+@foreach (var (type, ticketCount) in _ticketTypes) {
+    <ListedTicket Type="type" TicketCount="ticketCount"/>}
+
+<h4 class="mt-5">
+    Rozpis pódií:
+</h4>
+@foreach (var podium in _fest.Concert.OrderBy(x => x.Start).GroupBy(x => x.Number).OrderBy(x => x.Key)) {
+    foreach (var concert in podium.ToList()) {
+        <p class="mt-4 mb-4">Pódum číslo @podium.Key:</p>
+        <table class="table table-striped">
+            <tr>
+                <td style="width: 34%">
+                    @concert.Start.ToString("dddd d. MMM yyyy h:mm ", _culture).FirstCharToUpper() - @concert.End.ToString("h:mm ", _culture)
+                </td >
+                <td style="width: 34%">@concert.Performer.Name</td>
+                <td style="width: 34%">
+                    <button class="btn btn-outline-info" @onclick="@(_ => Navigation.NavigateTo("/performers/" + concert.PerformerId))">Detaily</button>
+                </td>
+            </tr>
+        </table>
+    }
+}
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    Festival _fest;
+
+    CultureInfo _culture;
+
+    List<(TicketType type, int remaining)> _ticketTypes = new List<(TicketType type, int remaining)>();
+
+    protected override void OnInitialized() {
+        _fest = Database.Festival.Include(x => x.Concert).ThenInclude(x => x.Performer).First(x => x.Id == Id);
+        _ticketTypes = Tickets.GetTickets(_fest);
+        _culture = new CultureInfo("cs-CZ");
+        base.OnInitialized();
+    }
+
+
+}

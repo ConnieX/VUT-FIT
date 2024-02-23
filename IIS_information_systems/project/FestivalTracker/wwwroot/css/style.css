@@ -1,0 +1,510 @@
+
+.bottom{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.text-input{
+    background: #ffffff44;
+    color: #eee;
+    border: none;
+}
+
+.text-input::placeholder{
+    color: #ccc;
+}
+.text-input:focus{
+    background: #fff6;
+    color: #eee
+}
+
+
+.table-text-input{
+    transition: 0.2s;
+    background: #f000;
+    color: #eee;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 5px 5px 3px;
+}
+
+.table-text-input::placeholder{
+    color: #ccc;
+}
+.table-text-input:focus{
+    background: #1115;
+    color: #eee;
+    border: none;
+}
+
+.table-text-input:hover{
+    background: #1115;
+}
+
+
+.login-buttons{
+    margin-left:auto; margin-right:auto;
+}
+
+.login-btn{
+    width: 106px;
+}
+.login-btn:hover{
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.btn-wide{
+    width: 25%;
+}
+
+.btn-wide:hover{
+    background: rgba(255, 255, 255, 0.6);   
+}
+
+.btn-normal{
+    color: #eee;
+    border: none;
+    background: #fff4;
+}
+.btn-normal:hover{
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.btn-table-dropdown{
+    transition: 0.2s;
+}
+
+.btn-table-dropdown:hover{
+    background: #69696969;
+
+}
+
+.logout-btn{
+    color: #eee;
+    border: none;
+    background: #fff2;
+    width: 100%;
+}
+.logout-btn:hover{
+    background: rgba(255, 255, 255, 0.3);
+}
+
+
+
+.err-msg{
+    color:red;
+    text-align: center;
+}
+
+.navbar-profile{
+    height: 60px;
+    margin-bottom: 10px;
+    padding: 7px;
+    border-radius: 5px;
+    transition: 0.2s;
+    color: white;
+
+}
+
+.navbar-profile:hover{
+    background: #9991;
+    color: white;
+}
+
+.navbar-profile img{
+    background: #ddd5;
+    border-radius: 24px;
+    height: 48px;
+    width: 48px;
+    margin-top: -36px;
+    margin-left: 2px;
+}
+
+.navbar-profile div{
+    align-items: center;
+    display: inline-block;
+    margin-left: 2px;
+    padding-top: 7px;
+    max-height: 60px;
+    width: 145px;
+
+}
+.navbar-profile div div{
+    margin-top: -20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.profile-image{
+    width: 56px;
+}
+.profile-image img{
+    background: #fff5;
+    border-radius: 24px;
+    height: 40px;
+    width: 40px;
+}
+
+/*table{
+    width:30%;
+    height: 20px;
+    text-align: left;
+}*/
+
+.width-table{
+    width:50%;
+    height: 20px;
+    font-size: 20px;
+    text-align: left;
+}
+
+.table-responsive{
+    min-height: 80vh;
+    overflow-y: visible !important;
+
+}
+
+.normal-text{
+    font-size: 30px;
+}
+
+@media (max-width: 768px) {
+    .full-width{
+        width: 100%;
+        align-content: center;
+    }
+    .screen-center {
+        margin-top: 20px;
+    }
+}
+@media (min-width: 769px){
+    .full-width{
+        width: 75%;
+        align-content: center;
+
+    }
+    .screen-center {
+        width: 100%;
+        min-height: 75vh; /* These two lines are counted as one :-)       */
+        display: flex;
+        /*align-items: center;  DON'T USE THIS... BLEH =D   */
+        justify-content: center;
+        transform: translateY(10%);
+    }
+}
+
+h1{
+    padding: 20px 0;
+    font-size: 40px;
+}
+
+
+.festival-bcg-img{
+    background-image: url("../images/colorful-rainbow.png");
+    filter: opacity(1);
+    margin-bottom: 25px;
+    padding: 10px;
+   /* box-shadow: 0 0 10px 10px rgb(230, 230, 255) inset;*/
+  /*  box-shadow: inset 0 0 40px 16px;*/
+    background-size: 100%;
+}
+
+h2{
+    font-size: 30px;
+}
+
+
+.festival-item {
+    transition: 0.2s;
+    height: 90px;
+    margin: 20px 0px 0px 0px;
+    background: #333;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 0.5fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+    "festival-name . festival-price"
+    "festival-name . festival-price"
+    "festival-info festival-start festival-price"
+    "festival-info festival-end festival-price";
+}
+
+.festival-info {
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+    "festival-location festival-genre";
+    grid-area: festival-info;
+
+}
+
+
+label{
+    font-size: 20px;
+}
+
+.festival-item:hover{
+    background: #282828;
+
+}
+
+
+
+.festival-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    margin-top: 10px;
+    font-size: 1.6em;
+    grid-area: festival-name; 
+}
+
+.festival-price {
+    transition: 0.2s;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.3fr 0.7fr;
+    gap: 0px 0px;
+    border-radius: 5px;
+    grid-template-areas:
+    "festival-price-buy festival-price-buy"
+    "festival-price-remaining festival-price-remaining";
+    grid-area: festival-price;
+}
+
+
+.festival-price-buy {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    grid-area: festival-price-buy; 
+}
+.festival-price:hover{
+    background: #242424;
+}
+
+.festival-price-remaining {
+    display: flex;
+    justify-content: center;
+    grid-area: festival-price-remaining; }
+
+.festival-price-buy > img{
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+.festival-genre {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    margin-bottom: 7px;
+
+    align-items: flex-end;
+    grid-area: festival-genre; 
+}
+
+.festival-start {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    font-size: 1.0em;
+    display: flex;
+    align-items: center;
+    grid-area: festival-start; 
+}
+
+.festival-end {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    cursor: pointer;
+    font-size: 1.0em;
+    display: flex;
+    margin-bottom: 7px;
+
+    align-items: center;
+    grid-area: festival-end; 
+}
+
+.festival-location {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    font-size: 1.3em;
+    margin-left: 10px;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 7px;
+    grid-area: festival-location; 
+}
+
+.text-input-filter{
+    border-radius: 0px 5px 5px 0px;
+    background: #333; 
+    border: 1px;
+    color: white;
+
+    transition: 0.2s;
+}
+
+.text-input-filter:hover{
+    background: #292929;
+}
+
+.text-input-filter:focus {
+    background: #292929;
+    border: 0;
+    color: white;
+
+}
+a {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+}
+
+a:hover {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+}
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .festival-item {
+        transition: 0.2s;
+        height: 200px;
+        margin: 20px;
+        background: #333;
+        border-radius: 5px;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        gap: 0px 0px;
+        grid-template-areas:
+            "festival-name"
+            "festival-info"
+            "festival-info"
+            "festival-price";
+    }
+
+    .festival-info {
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1.3fr 0.7fr;
+        gap: 0px 0px;
+        grid-template-areas:
+            "festival-location" 
+            "festival-genre";
+        grid-area: festival-info;
+
+    }
+}
+
+.ticket-type-info {
+    transition: 0.2s;
+    height: 45px;
+    border-radius: 5px;
+    margin: 10px 0px 10px 0px;
+    display: grid;
+    grid-template-columns: 1fr 0.7fr 0.5fr 0.5fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+    "ticket-type-name ticket-type-date ticket-type-remaining ticket-type-price ticket-type-count"
+
+}
+
+.ticket-type-info:hover {
+   background: #333;
+}
+
+.number-input{
+    transition: 0.2s;
+    background: #292929;
+    color: white;
+    width: 75px;
+}
+
+.number-input:focus{
+    background: #393939;
+    color: white;
+    width: 75px;
+}
+
+.text-input-pretty{
+    transition: 0.2s;
+    background: #292929;
+    color: white;
+    width: 75px;
+}
+
+.text-input-pretty:focus{
+    background: #393939;
+    color: white;
+    width: 75px;
+}
+
+
+.ticket-type-name { 
+    height: inherit;
+    font-size: 16px;
+    display: flex;
+    margin-left: 20px;
+    align-items: center;
+    
+    grid-area: ticket-type-name; }
+.ticket-type-date {
+    height: inherit;
+    display: flex;
+    align-items: center;
+    grid-area: ticket-type-date; 
+}
+
+.ticket-type-remaining{
+    height: inherit;
+    display: flex;
+    align-items: center;
+    grid-area: ticket-type-remaining;
+}
+
+.ticket-type-price {
+    height: inherit;
+    display: flex;
+    align-items: center;
+    grid-area: ticket-type-price;
+}
+.ticket-type-count {
+    margin: 5px;
+    height: inherit;
+    align-items: flex-start;
+    display: inline-flex;
+    grid-area: ticket-type-count;
+}
+
+.td-vertical-center{
+    vertical-align: middle;
+}
+
+.card-img-top{
+    max-height: 10em;
+    min-height: 10em;
+    object-fit: cover;
+
+}

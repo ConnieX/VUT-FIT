@@ -1,0 +1,86 @@
+@page "/performers/new"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@attribute [Authorize(Policy = "Organizer")]
+
+<div class="screen-center">
+    <iframe style="display: none;" name="sub"></iframe>
+    <div class="full-width vertical-center">
+        <h1>
+            Vytvoření kapely
+        </h1>
+          <form @onsubmit="SubmitCreation" target="sub">
+            <div class="form-group">
+                <label>Název: *</label>
+                <div class="input-group mb-2">
+                    <input type="text" @bind=@Name placeholder="Název" class="form-control text-input">
+                </div>
+                <label>Žánr:</label>
+                <div class="input-group mb-2">
+                    <input @bind=@_genre class="form-control text-input">
+                </div>
+                <label>Logo:</label>
+                <div class="input-group mb-2">
+                    <input @bind=@_logo class="form-control text-input">
+                </div>
+                <label>Hodnocení - počet ★:</label>
+                <div class="input-group mb-2">
+                    <button type="button" class="btn dropdown-toggle btn-table-dropdown" style="width: 25%" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">@_stars</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" @onclick="_ => SetRating(1)" href="javascript:">1</a>
+                        <a class="dropdown-item" @onclick="_ => SetRating(2)" href="javascript:">2</a>
+                        <a class="dropdown-item" @onclick="_ => SetRating(3)" href="javascript:">3</a>
+                        <a class="dropdown-item" @onclick="_ => SetRating(4)" href="javascript:">4</a>
+                        <a class="dropdown-item" @onclick="_ => SetRating(5)" href="javascript:">5</a>
+                    </div>
+                    <br />
+                </div>
+            </div>
+              <small class="form-text text-muted">* Tyto položky jsou povinné.</small>
+
+            <div class="mt-2">
+                <button class="btn btn-normal btn-wide login-btn" type="submit" onclick="window.location.href='/performers'">Vytvořit kapelu</button>
+            </div>
+            <div class="mt-1" style="color:red;">
+                @ErrMsg
+            </div>
+          </form>
+    </div>
+</div>
+
+
+@code {
+    
+    string Name { get; set; }
+    int _stars = 0;
+    string _genre;
+    string _logo;
+
+    string ErrMsg { get; set; }
+
+    void SetRating(int stars) {
+        _stars = stars;
+    }
+
+    private async Task SubmitCreation(){
+        if (string.IsNullOrEmpty(Name)){
+            ErrMsg = "Zadejte prosím jméno kapely.";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        
+        var performer = new Performer(){
+            Name = Name, Rating = _stars, Genre = _genre, Logo = _logo
+        };
+        
+        Database.Performer.Add(performer);
+        Database.SaveChanges(); //We need this save to database to create the autoincrement ID
+        ErrMsg = "";
+        System.Threading.Thread.Sleep(1000);
+        await InvokeAsync(StateHasChanged);
+    }
+}

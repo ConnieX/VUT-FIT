@@ -1,0 +1,73 @@
+@page "/performers"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@using Microsoft.EntityFrameworkCore
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@inject IJSRuntime JsRuntime
+@attribute [Authorize(Policy = "Organizer")]
+
+<h1>Kapely</h1>
+<div class="table-responsive">
+    <table class="width-table">
+        @{
+            foreach (var performer in Performers) {   
+                <tr>
+                    <button class="btn" style="width: 200px" onclick="window.location.href='/performers/@performer.Id'">@performer.Name</button>
+                    <td class="align-middle">
+                        <button class="btn btn-outline-success" onclick="window.location.href='/performers/edit/@performer.Id'">Upravit</button>
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-outline-info" onclick="window.location.href='/performers/addartisttoperf/@performer.Id'">Přidat/odebrat členy</button>
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-outline-danger" @onclick="args => DeletePerformer(performer)">Smazat</button>
+                    </td>
+                </tr>
+            }
+        }
+        <tr>
+            <button class="btn btn-normal" style="width: 200px" onclick="window.location.href='/performers/new'">+</button>
+        </tr>
+    </table>
+</div>
+@code {
+    public List<Performer> Performers;
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        Performers = Database.Performer.ToList();
+    }
+
+    private async void DeletePerformer(Performer performer) {
+        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Jste si jistý že chcete smazat tuto kapelu?");
+        if (confirmed) {
+            List<PerformerHasArtist> perfHasArtist = Database.PerformerHasArtist.Where(x => x.PerformerId == performer.Id).ToList();
+            
+            if (perfHasArtist.Count != 0) {
+                foreach (var line in perfHasArtist) {
+                    Database.PerformerHasArtist.Remove(line);
+                }
+                Database.SaveChanges();
+            }
+            
+            List<Concert> concert = Database.Concert.Include(x => x.Festival).Where(x => x.PerformerId == performer.Id).ToList();
+            if (concert.Count != 0) {
+                foreach (var line in concert) {
+                    var confirmed2 = await JsRuntime.InvokeAsync<bool>("confirm", "Tato kapela vystupuje na festivalu " + line.Festival.Name + ". Jste si jistí že ji chcete odstranit?");
+                    if (confirmed2) {
+                        Database.Concert.Remove(line);
+                    }
+                }
+                Database.SaveChanges();
+            }
+            
+            Database.Performer.Remove(performer);
+            Database.SaveChanges();
+            Performers.Remove(performer);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+}

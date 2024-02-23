@@ -1,0 +1,71 @@
+@page "/organizer/artists/edit/{Id:int}"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@inject NavigationManager Nav;
+@attribute [Authorize(Policy = "Organizer")]
+
+
+<div class="screen-center">
+    <iframe style="display: none;" name="sub"></iframe>
+    <div class="full-width">
+        <form @onsubmit="SubmitEdit" target="sub">
+            <div class="form-group">
+                <h1>Úprava hudebníka</h1>
+                <div class="input-group mb-2">
+                    <input type="text" @bind="@artist.Name" placeholder="Jméno *" class="form-control text-input">
+                </div>
+                <div class="input-group mb-2">
+                    <input type="text" @bind="@artist.Surname" placeholder="Příjmení *" class="form-control text-input">
+                </div>
+                <button class="btn btn-outline-warning" onclick="window.location.href='/organizer/artists/edit/perf/@Id'">Upravit kapely, se kterými vystupuje</button>
+            </div>
+            <div class="mt-2">
+                <button class="btn btn-outline-success" type="submit">Uložit úpravy</button>
+                <button class="btn btn-normal btn-wide" onclick="window.location.href='/organizer/artists'">Zpět na seznam</button>
+            </div>
+            <div class="mt-1" style="color:red;">
+                @ErrMsg
+            </div>
+             <div class="mt-1" style="color:lawngreen;">
+                @SuccMsg
+            </div>
+        </form>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    
+    Artist artist = new Artist();
+    List<Performer> Performers = new List<Performer>();
+
+    string ErrMsg { get; set; }
+    string SuccMsg { get; set; }
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        Performers = Database.Performer.ToList();
+        artist = Database.Artist.FirstOrDefault(x => x.Id == Id);
+        if (artist == default) {
+            Nav.NavigateTo("/unauthorized");
+        }
+    }
+
+    private async Task SubmitEdit(EventArgs args) {
+        if (string.IsNullOrEmpty(artist.Name) || string.IsNullOrEmpty(artist.Surname)){
+            ErrMsg = "Zadejte prosím celé jméno hudebníka.";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        Database.Artist.Update(artist);
+        Database.SaveChanges();
+        ErrMsg = "";
+        SuccMsg = "Změny byly uloženy.";
+        await InvokeAsync(StateHasChanged);
+        return;
+    }
+}

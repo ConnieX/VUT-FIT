@@ -1,0 +1,117 @@
+@page "/reservation/payment"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@using Microsoft.EntityFrameworkCore
+@using System.Diagnostics
+@inject CookieService Cookies;
+@inject DatabaseContext Database;
+@inject TicketManager Tickets;
+@inject NavigationManager Nav;
+@inject UserManager user;
+
+
+<h3>Platba</h3>
+
+@if (_reservation == null) {
+    return;
+}
+
+<table class="table table-hover ">
+    <thead>
+    <tr>
+        <th scope="col" style="width: 5%" class="text-center">#</th>
+        <th scope="col" style="width: 25%">Festival</th>
+        <th scope="col" style="width: 55%">Typ</th>
+        <th scope="col" style="width: 10%">Cena</th>
+        <th scope="col" style="width: 5%" class="">Akce</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        var count = 0;
+    }
+    @foreach (var item in _reservation.Ticket) {
+        count++;
+        <tr>
+            <td class="text-center">@count</td>
+            <td>@festival</td>
+            <td>@type</td>
+            <td>@price ,-</td>
+            <td>
+                <button class="btn btn-outline-danger" @onclick="@(_ => RemoveTicket(item))">Odebrat</button>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Celkem: @(price*count) ,-</td>
+        <td></td>
+
+    </tr>
+    </tbody>
+</table>
+<button class="btn btn-outline-info" @onclick="@(_ => Pay())">Zaplatit</button>
+
+
+@code {
+
+    Reservation _reservation;
+    string type;
+    string festival;
+    double price;
+
+    async Task Pay() {
+        Tickets.PayForReservation(_reservation);
+        await Cookies.DeleteCookie("Reservation");
+        await Cookies.DeleteCookie("Person");
+        Nav.NavigateTo("/");
+    }
+
+
+    void RemoveTicket(Ticket t) {
+        Database.Remove(t);
+        Database.SaveChanges();
+        InvokeAsync(StateHasChanged);
+    }
+
+    protected override async Task<Task> OnAfterRenderAsync(bool firstRender) {
+        if (!firstRender) {
+            return base.OnAfterRenderAsync(firstRender);
+        }
+        try {
+            var resId = await Cookies.GetCookie("Reservation");
+            if (string.IsNullOrEmpty(resId)) {
+                Nav.NavigateTo("/unauthorized");
+            }
+            var personId = await Cookies.GetCookie("Person");
+            var p = !string.IsNullOrEmpty(personId) ? Database.Person.Find(int.Parse(personId)) : user.CurrentUser.Person;
+            if (p == null) {
+                Nav.NavigateTo("/unauthorized");
+            }
+            var reservationId = int.Parse(resId);
+            _reservation = Database.Reservation
+                .Include(x => x.Ticket)
+                .FirstOrDefault(x => x.PersonId == p.Id && x.Id == reservationId);
+            if (_reservation == null) {
+                Nav.NavigateTo("/unauthorized");
+            }
+            if (_reservation.State != "Rezervováno") {
+                Nav.NavigateTo("/unauthorized");
+            }
+            var typeObj = Database.TicketType.First(x => x.Id == _reservation.Ticket.First().TicketTypeId);
+            price = typeObj.Price;
+            type = typeObj.Name;
+            festival = Database.Festival.Find(_reservation.Ticket.First().FestivalId).Name;
+
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception e) {
+            Console.WriteLine("Someone just tried to access payment without paying anything");
+        }
+      
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+}

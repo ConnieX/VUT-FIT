@@ -1,0 +1,106 @@
+@page "/organizer/festivals/new"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@inject GeoService Geo;
+@attribute [Authorize(Policy = "Organizer")]
+
+<div class="screen-center">
+    <iframe style="display: none;" name="sub"></iframe>
+    <div class="full-width vertical-center">
+        <h1>
+            Vytvoření festivalu
+        </h1>
+          <form @onsubmit="SubmitCreation" target="sub">
+              <div class="form-group">
+                  <label>Název: *</label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind="Name" placeholder="Název" class="form-control text-input">
+                  </div>
+                  <label>Začátek: *</label>
+                  <div class="input-group mb-2">
+                      <input type="date" @bind="Beggining" placeholder="Začátek" class="form-control text-input">
+                  </div>
+                  <label>Konec: *</label>
+                  <div class="input-group mb-2">
+                      <input type="date" @bind="End" placeholder="Konec" class="form-control text-input">
+                  </div>
+                  <label>Místo konání: *</label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind="Place" placeholder="Místo konání" class="form-control text-input">
+                  </div>
+                  <label>Žánr: </label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind="Genre" placeholder="Žánr" class="form-control text-input">
+                  </div>
+                  <label>Kapacita: </label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind="Capacity" placeholder="Kapacita" class="form-control text-input">
+                  </div>
+                  <label>Detaily: </label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind="Details" placeholder="Detaily" class="form-control text-input">
+                  </div>
+              </div>
+              <small class="form-text text-muted">* Tyto položky jsou povinné.</small>
+
+              <div class="mt-2">
+                  <button class="btn btn-normal btn-wide login-btn" type="submit" onclick="window.location.href='/organizer/festivals'">Vytvořit festival</button>
+              </div>
+              <div class="mt-1" style="color:red;">
+                  @ErrMsg
+              </div>
+          </form>
+    </div>
+</div>
+
+
+@code {
+    
+    string Name { get; set; }
+    DateTime Beggining { get; set; } = DateTime.Today;
+    DateTime End { get; set; } = DateTime.Today;
+    string Place { get; set; } = "";
+    string Genre { get; set; } = "";
+    int Capacity { get; set; } = 0;
+    string Details { get; set; } = "";
+
+    string ErrMsg { get; set; }
+
+    private bool CreateNewFestival(string name, DateTime start, DateTime end, string place, string genre,
+        int capacity, string details, out string errorMsg){
+        if (string.IsNullOrEmpty(name)){
+            errorMsg = "Zadejte prosím jméno festivalu.";
+            return false;
+        }
+        if (capacity < 0){
+            errorMsg = "Kapacita je příliš malá.";
+            return false;
+        }
+        if (start > end) {
+            errorMsg = "Festival nemůže končit dříve než začne.";
+            return false;
+        }
+        
+        var festival = new Festival{
+            Name = name, StartDate = start, EndDate = end, Place = place, Genre = genre,
+            Capacity = capacity, Details = details, CreatorId = Manager.CurrentUser.PersonId
+        };
+        festival.Geolocation = Geo.GetLocation(festival.Place).ToString();
+        
+        Database.Festival.Add(festival);
+        Database.SaveChanges(); //We need this save to database to create the autoincrement ID
+        errorMsg = "";
+        return true;
+    }
+
+    private async Task SubmitCreation(EventArgs args){
+        if (!CreateNewFestival(Name, Beggining, End, Place, Genre, Capacity, Details, out var errorMsg)){
+            ErrMsg = errorMsg;
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+    }
+}

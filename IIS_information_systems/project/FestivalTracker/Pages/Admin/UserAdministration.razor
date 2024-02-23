@@ -1,0 +1,148 @@
+@page "/admin/users"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@using Microsoft.EntityFrameworkCore
+@using System.Linq
+@attribute [Authorize(Policy = "Admin")]
+@inject DatabaseContext Database;
+@inject UserManager UserManager
+@inject IJSRuntime JsRuntime
+@implements IDisposable;
+
+
+<h3>Správa uživatelů</h3>
+<p>
+    Jako správce systému zde můžete spravovat ostatní uživatele.
+</p>
+<p>
+    Jako správce můžete přidávat další správce do systému, ale už je nemůžete odebrat.
+</p>
+<div class="table-responsive">
+    <table class="table table-hover ">
+        <thead>
+        <tr>
+            <th scope="col" class="text-center">#</th>
+            <th scope="col" style="width: 25%">Jméno</th>
+            <th scope="col" style="width: 25%">Příjmení</th>
+            <th scope="col" style="width: 30%">Email</th>
+            <th scope="col" style="width: 20%">
+                <span style="margin-left: 12px">Role</span>
+            </th>
+            <th scope="col" class="">Akce</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var role in Users.Keys.OrderByDescending(x => x)) {
+            var roleName = Helper.TranslateRole(role);
+            foreach (var user in Users[role]) {
+                <tr>
+                    <td class="profile-image">
+                        @if (string.IsNullOrEmpty(user.ProfilePic)) {
+                            <img src="images/blank_profile.png" alt="User profile picture">
+                        }
+                        else {
+                            <img src="@user.ProfilePic" alt="User profile picture">
+                        }
+                    </td>
+                    @if (user.Role < 3) {
+                        <td class="align-middle">
+                            <input type="text" class="table-text-input form-control" value="@user.Person.Name" @oninput="@(e => SetName(user, e.Value?.ToString()))">
+                        </td>
+                        <td class="align-middle">
+                            <input type="text" class="table-text-input form-control" value="@user.Person.Surname" @oninput="@(e => SetSurname(user, e.Value?.ToString()))">
+                        </td>
+                        <td class="align-middle">@user.Person.Email</td>
+                        <td class="align-middle">
+                            <div class="btn-group">
+                                <button type="button" class="btn dropdown-toggle btn-table-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @roleName
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" @onclick="_ => SetRole(user, 3)" href="javascript:">Administrátor</a>
+                                    <a class="dropdown-item" @onclick="_ => SetRole(user, 2)" href="javascript:">Pořadatel</a>
+                                    <a class="dropdown-item" @onclick="_ => SetRole(user, 1)" href="javascript:">Prachy bába</a>
+                                    <a class="dropdown-item" @onclick="_ => SetRole(user, 0)" href="javascript:">Uživatel</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="align-middle" style="width: 125px;">
+                            <button class="btn btn-outline-danger" @onclick="args => DeleteUser(user)">Smazat</button>
+                        </td>
+                    }
+                    else {
+                        <td class="align-middle">@user.Person.Name</td>
+                        <td class="align-middle">@user.Person.Surname</td>
+                        <td class="align-middle">@user.Person.Email</td>
+                        <td class="align-middle">
+                            <span style="margin-left: 12px">@roleName</span>
+                        </td>
+                        <td class="align-middle" style="width: 125px;"></td>
+                    }
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    IEnumerable<Person> Unregistered { get; set; }
+
+    Dictionary<int, List<User>> Users { get; set; }
+
+    private async Task SetName(User user, string name) {
+        user.Person.Name = name;
+        Database.Person.Update(user.Person);
+        
+        await Database.SaveChangesAsync();
+    }
+
+    private async Task SetSurname(User user, string surname) {
+        user.Person.Surname = surname;
+        Database.Person.Update(user.Person);
+        await Database.SaveChangesAsync();
+    }
+
+    private async Task SetRole(User user, int role) {
+        Users[user.Role].Remove(user);
+        if (!Users.ContainsKey(role)) {
+            Users.Add(role, new List<User>());
+        }
+        Users[role].Add(user);
+        user.Role = role;
+        await Database.SaveChangesAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task DeleteUser(User user) {
+        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Jste si jistý že chcete smazat uživatele?");
+        if (confirmed) {
+            await UserManager.DeleteUser(user);
+            Users[user.Role].Remove(user);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task GroupUsers() {
+        Users = Database.User.Include(x => x.Person)
+            .AsEnumerable()
+            .GroupBy(x => x.Role)
+            .ToDictionary(x => x.Key, x => x.ToList());
+        var current = await UserManager.GetCurrentUserAsync();
+        Users[current.Role].Remove(current);
+        var ids = Database.User.Select(x => x.PersonId);
+        Unregistered = Database.Person.Where(x => !ids.Contains(x.Id));
+    }
+
+    protected override async Task OnInitializedAsync() {
+        await GroupUsers();
+        await base.OnInitializedAsync();
+    }
+
+    public void Dispose() {
+        
+    }
+
+
+}

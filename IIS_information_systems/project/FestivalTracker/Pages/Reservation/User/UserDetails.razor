@@ -1,0 +1,187 @@
+@page "/reservation/details"
+@using FestivalTracker.Services
+@using System.Timers
+@using FestivalTracker.Data
+@using FestivalTracker.Pages.Festivals
+@using System.Data
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@inject CookieService Cookies;
+@inject NavigationManager Nav;
+@inject TicketManager Tickets;
+@implements IDisposable;
+@inject UserManager User;
+@inject DatabaseContext Database;
+
+
+<h3>Detaily pro zakoupení lístku</h3>
+
+@if (User.CurrentUser != null) {
+    <h4>Již jste přihlášen.</h4>
+    return;
+}
+
+@if (_reservation == null) {
+    return;
+}
+
+<h4>Zbývající čas rezervace: @_remainingTime</h4>
+
+<div>
+    <iframe style="display: none;" name="sub"></iframe>
+
+    <form @onsubmit="SubmitLogin" target="sub" method="post">
+        <div class="form-group mb-2">
+            <label>Osobní informace</label>
+            <div class="input-group mb-2">
+                <input type="text" @bind="_name" placeholder="Jméno" class="form-control text-input">
+                <input type="text" @bind="_surname" placeholder="Příjmení" class="form-control text-input">
+            </div>
+        </div>
+        <div class="form-group mb-2">
+            <label>Váš email</label>
+            <input type="text" placeholder="example@example.cz" @bind="_email" class="form-control text-input"/>
+        </div>
+        <div class="form-group mb-2 mt-3">
+            <input type="checkbox" name="createAcc" @onchange="@(eventArgs => { CheckClicked(eventArgs.Value); })"/>
+            <label for="createAcc">Přeji si vytvořit účet</label>
+        </div>
+        <div hidden="@(!_createAccount)" class="form-group mb-2">
+            <label>Heslo</label>
+            <input type="password" @bind="_password" placeholder="Heslo" class="form-control text-input mb-3">
+            <input type="password" @bind="_confirmation" placeholder="Heslo znovu" class="form-control text-input mb-3">
+        </div>
+        <div class="err-msg mt-1">
+            @_errMsg
+        </div>
+        <div class="mt-2">
+            <button class="btn btn-outline-info" type="submit">Zaplatit</button>
+        </div>
+    </form>
+</div>
+
+
+@code {
+    Reservation _reservation;
+
+    string _remainingTime;
+
+    Timer _timer;
+
+    private string _name;
+    private string _surname;
+    private string _email;
+    private bool _createAccount;
+    private string _password;
+    private string _confirmation;
+
+    string _errMsg;
+
+    void CheckClicked(object value) {
+        _createAccount = (bool) value;
+    }
+
+    async Task Register() {
+        if (_password != _confirmation) {
+            _errMsg = "Hesla se neshodují";
+            return;
+        }
+        if (!User.CreateUser(_email, _password, _name, _surname, DateTime.UnixEpoch, out var errorMsg)) {
+            _errMsg = errorMsg;
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        _reservation.ExpirationDate = _reservation.ExpirationDate.AddDays(10);
+        _reservation.PersonId = Database.Person.First(x => x.Email == _email).Id;
+        Database.Reservation.Update(_reservation);
+        await Database.SaveChangesAsync();
+        await Cookies.SetCookie("Reservation", _reservation.Id.ToString(), TimeSpan.FromDays(10));
+        await User.Login(_email, _password, "reservation/payment");
+        //Nav.NavigateTo("/reservation/payment");
+    }
+
+
+    async Task SubmitLogin() {
+        if (_createAccount) {
+            await Register();
+            return;
+        }
+        if (string.IsNullOrEmpty(_email)) {
+            _errMsg = "Vyplňte prosím email";
+            return;
+        }
+        if (string.IsNullOrEmpty(_name)) {
+            _errMsg = "Vyplňte prosím jméno";
+            return;
+        }
+        if (string.IsNullOrEmpty(_surname)) {
+            _errMsg = "Vyplňte prosím příjmení";
+            return;
+        }
+        if (!UserManager.ValidateEmail(_email)) {
+            _errMsg = "Email není validní";
+            return;
+        }
+        var person = Database.Person.FirstOrDefault(x => x.Email == _email);
+        if (person != null) {
+            _errMsg = "Email je již zaregistrován";
+            return;
+        }
+
+        var p = new Person {
+            Email = _email,
+            Name = _name,
+            Surname = _surname,
+            Birth = DateTime.UnixEpoch
+        };
+        await Database.SaveChangesAsync();
+        _reservation.Person = p;
+        _reservation.ExpirationDate = DateTime.Now.AddMinutes(5);
+        Database.Reservation.Update(_reservation);
+        await Database.SaveChangesAsync();
+        await Cookies.SetCookie("Reservation", _reservation.Id.ToString(), TimeSpan.FromMinutes(5));
+        await Cookies.SetCookie("Person", p.Id.ToString(), TimeSpan.FromMinutes(5));
+        Nav.NavigateTo("/reservation/payment");
+
+    }
+
+
+    protected override void OnInitialized() {
+        _timer = new Timer(1000);
+        _timer.Elapsed += async (s, ev) => {
+            if (DateTime.Now > _reservation.ExpirationDate) {
+                Tickets.RemoveReservation(_reservation);
+                _timer.Stop();
+                Nav.NavigateTo("/");
+            }
+            _remainingTime = (_reservation.ExpirationDate - DateTime.Now).ToString("mm\\:ss");
+            await InvokeAsync(StateHasChanged);
+        };
+        base.OnInitialized();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if (!firstRender) {
+            await base.OnAfterRenderAsync(false);
+            return;
+        }
+        var result = await Cookies.GetCookie("Reservation");
+        if (string.IsNullOrEmpty(result) || !int.TryParse(result, out var resId)) {
+            Nav.NavigateTo("/unauthorized");
+            return;
+        }
+        _reservation = Database.Reservation.FirstOrDefault(x => x.Id == resId);
+        if (_reservation == default) {
+            Nav.NavigateTo("/unauthorized");
+            return;
+        }
+        _timer.Start();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public void Dispose() {
+        _timer.Stop();
+    }
+
+}

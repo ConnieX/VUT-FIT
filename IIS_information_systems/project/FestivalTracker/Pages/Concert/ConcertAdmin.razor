@@ -1,0 +1,140 @@
+@page "/festivals/concerts/{Id:int}"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@using Microsoft.EntityFrameworkCore
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@inject IJSRuntime JsRuntime
+@attribute [Authorize(Policy = "Organizer")]
+@attribute [Authorize(Policy = "CreatedBy")]
+
+<h1>Koncerty na festivalu @Database.Festival.Find(Id).Name</h1>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col" style="width: 25%">Kapela</th>
+            <th scope="col" style="width: 20%">Pódium</th>
+            <th scope="col" style="width: 20%">Začátek</th>
+            <th scope="col" style="width: 20%">Konec</th>
+            <th scope="col" style="width: 10%">Akce</th>
+        </tr>
+        </thead>
+
+        @foreach (var concert in _concerts) {
+            <tr>
+                <th>@concert.Performer.Name</th>
+                <td>
+                    <div class="input-group mb-2">
+                        <input type="number" class="form-control number-input" placeholder="@concert.Number" @onchange="@(args => SetPodium(concert.PerformerId, args.Value.ToString()))">
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group mb-2">
+                        <input type="datetime-local" value="@concert.Start.ToString("yyyy-MM-dd HH:mm").Replace(' ','T')" class="form-control text-input-pretty"   @onchange="@(args => SetStart(concert.PerformerId, args.Value))">
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group mb-2">
+                        <input type="datetime-local" value="@concert.End.ToString("yyyy-MM-dd HH:mm").Replace(' ','T')" class="form-control text-input-pretty" @onchange="@(args => SetEnd(concert.PerformerId, args.Value))">
+                    </div>
+                </td>
+                <td class="align-middle">
+                    <button class="btn btn-outline-danger" @onclick="args => DeleteFestival(concert)">Smazat</button>
+                </td>
+            </tr>
+        }
+        
+        <tr>
+            <button class="btn btn-normal" style="width: 200px" onclick="window.location.href='/festivals/concerts/new/@Id'">+</button>
+        </tr>
+        <div class="mt-1" style="color:red;">
+            @_errMsg
+        </div>
+    </table>
+</div>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+     List<Concert> _concerts;
+    Festival _festival;
+
+    string _errMsg;
+
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        _concerts = Database.Concert.Include(x => x.Performer).Where(x => x.FestivalId == Id).ToList();
+        _festival = Database.Festival.FirstOrDefault(x => x.Id == Id);
+        if (_festival == default) {
+            Navigation.NavigateTo("/unauthorized");
+        }
+    }
+
+    private async Task DeleteFestival(Concert concert) {
+        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Jste si jistý že chcete smazat tento koncert?");
+        if (confirmed) {
+            Database.Concert.Remove(concert);
+            Database.SaveChanges();
+            _concerts.Remove(concert);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private void SetPodium(int performerId, string podium) {
+        List<Concert> editConcert = Database.Concert.Where(x => x.PerformerId == performerId && x.FestivalId == Id).ToList();
+        editConcert[0].Number = int.Parse(podium);
+        Database.Concert.Update(editConcert[0]);
+        Database.SaveChanges();
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void SetStart(int performerId, object? start) {
+        if (start == null) {
+            return;
+        }
+        if (DateTime.Parse((string) start) < _festival.StartDate) {
+            _errMsg = "Koncert nemůže být mimo konání festivalu.";
+            InvokeAsync(StateHasChanged);
+            return;
+        }
+        if (Database.Concert.Where(x => x.PerformerId == performerId)
+            .Any(x => x.Start > DateTime.Parse((string) start) && x.End < DateTime.Parse((string) start)).ToString() != "") {
+            _errMsg = "Kapela v tuto dobu vystupuje na jiném festivalu";
+            InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        List<Concert> editConcert = Database.Concert.Where(x => x.PerformerId == performerId).ToList();
+        editConcert[0].Start = DateTime.Parse((string) start);
+        Database.SaveChanges();
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void SetEnd(int performerId, object? end) {
+        if (end == null) {
+            return;
+        }
+        if (DateTime.Parse((string) end) < _festival.StartDate) {
+            _errMsg = "Koncert nemůže být mimo konání festivalu.";
+            InvokeAsync(StateHasChanged);
+            return;
+        }
+        if (Database.Concert.Where(x => x.PerformerId == performerId)
+            .Any(x => x.Start > DateTime.Parse((string) end) && x.End < DateTime.Parse((string) end)).ToString() != "") {
+            _errMsg = "Kapela v tuto dobu vystupuje na jiném festivalu";
+            InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        var editConcert = Database.Concert.Where(x => x.PerformerId == performerId).ToList();
+        editConcert[0].End = DateTime.Parse((string) end);
+        Database.SaveChanges();
+        InvokeAsync(StateHasChanged);
+    }
+
+}

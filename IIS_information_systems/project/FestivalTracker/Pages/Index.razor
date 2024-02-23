@@ -1,0 +1,48 @@
+﻿@page "/"
+@using FestivalTracker.Data
+@using FestivalTracker.Components
+@using Microsoft.EntityFrameworkCore
+@using System.Timers
+@using FestivalTracker.Services
+@using System.Device.Location
+@inject DatabaseContext Db
+@inject GeoService Geo;
+
+<h1>Festival Tracker</h1>
+<h3>
+    Vítejte v aplikaci Festival Tracker.
+</h3>
+<p>
+    Na této stránce se vám zobrazí nejdřívějších 5 festivalů. V případě že naší stárnce povolíte přístup k Vaší lokaci,
+    zobrazí se vám tyto festivaly seřazené podle toho, který je k Vám pravděpodobně nejblíže.
+</p>
+
+<div>
+    @foreach (var (festival,count) in _festivals) {
+        <FestivalComponent Festival="@festival" Remaining="@count"/>    }
+</div>
+
+
+@code{
+
+    List<(Festival, int )> _festivals;
+
+    protected override void OnInitialized() {
+        _festivals = new List<(Festival, int)>();
+        var tickets = Db.Ticket.ToList();
+
+        foreach (var festival in Db.Festival.Include(x => x.TicketType)
+            .Include(x => x.Concert).Where(x => x.StartDate > DateTime.Now)
+            .OrderBy(x => x.StartDate).Take(5)) {
+            var soldCount = tickets.Count(x => festival.TicketType.Any(y => y.Id == x.TicketTypeId));
+            var totalCount = festival.TicketType.Select(x => x.Count).Sum();
+            _festivals.Add((festival, totalCount - soldCount));
+        }
+
+    }
+
+
+
+
+
+}

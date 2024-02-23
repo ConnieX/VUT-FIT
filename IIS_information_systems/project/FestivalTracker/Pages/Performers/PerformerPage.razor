@@ -1,0 +1,79 @@
+@page "/performers/{Id:int}"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@using Microsoft.EntityFrameworkCore
+@using System.Globalization
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+
+<h1 class="festival-bcg-img">@_perf.Name</h1>
+
+<h4 class="mt-2">
+    Hodnocení:
+    @{
+        var i = 0;
+        for (; i < _perf.Rating; i++) {
+            <span>★</span>
+        }
+        for (; i < 5; i++) {
+            <span>☆</span>
+        }
+    }
+</h4>
+<h5 class="mt-2">
+    Členové:
+    @string.Join(", ", _arts.Select(x => x.Name + " " + x.Surname))
+</h5>
+
+<h4 class="mt-2 mb-2">Koncerty: </h4>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col" style="width: 25%">Festival</th>
+        <th scope="col" style="width: 25%">Lokace</th>
+        <th scope="col" style="width: 20%">Datum</th>
+        <th scope="col" style="width: 10%">Cena od</th>
+        <th scope="col" style="width: 10%">Akce</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var concert in _perf.Concert) {
+        <tr>
+            <td class="td-vertical-center">@concert.Festival.Name</td>
+            <td class="td-vertical-center">@concert.Festival.Place</td>
+            <td class="td-vertical-center">@concert.Start.ToString("dddd d. MMM yyy", _culture)</td>
+            <td class="td-vertical-center">@concert.Festival.TicketType.Min(x => x.Price) ,-</td>
+            <td>
+                <button class="btn btn-outline-info" @onclick="@(_ => Navigation.NavigateTo("/festivals/" + concert.Festival.Id))">Koupit</button>
+            </td>
+        </tr>
+    }
+    </tbody>
+
+</table>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    List<Artist> _arts = new List<Artist>();
+    private Performer _perf = new Performer();
+
+    CultureInfo _culture;
+    
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        _culture = new CultureInfo("cs-CZ");
+        _perf = Database.Performer.Include(x => x.Concert).ThenInclude(x => x.Festival).ThenInclude(x => x.TicketType).
+            Include(x => x.PerformerHasArtist).ThenInclude(x => x.Artist).FirstOrDefault(x => x.Id == Id);
+        if (_perf == default) {
+            Navigation.NavigateTo("/unauthorized");
+            return;
+        }
+        _arts = _perf.PerformerHasArtist.Select(x => x.Artist).ToList();
+    }
+
+}

@@ -1,0 +1,151 @@
+@page "/organizer/festivals/addtickets/{Id:int}"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@inject IJSRuntime JsRuntime
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@attribute [Authorize(Policy = "Organizer")]
+@attribute [Authorize(Policy = "CreatedBy")]
+
+<div class="screen-center">
+    <div class="full-width vertical-center">
+        <h1>
+            Vytvořit nový typ vstupenky na festival @festival.Name
+        </h1>
+        <form @onsubmit="SubmitEdit" target="sub">
+            <div class="form-group mb-2">
+                <label>Název: </label>
+                <div class="input-group mb-2">
+                    <input type="string" @bind=@Name class="form-control text-input">
+                </div>
+                <label>Platnost od: *</label>
+            </div>
+            <div class="input-group mb-2">
+                <input type="date" @bind=@TicketFrom class="form-control text-input">
+            </div>
+            <label>Platnost do: *</label>
+            <div class="input-group mb-2">
+                <input type="date" @bind=@TicketTo class="form-control text-input">
+            </div>
+            <label>Cena: *</label>
+            <div class="input-group mb-2">
+                <input type="number" @bind=@TicketPrice placeholder="Cena (v Kč) *" class="form-control text-input">
+            </div>
+            <label>Počet kusů: </label>
+            <div class="input-group mb-2">
+                <input type="number" @bind=@count placeholder="Počet kusů: " class="form-control text-input">
+            </div>
+            <small class="form-text text-muted">* Tyto položky nesmějí zůstat prázdné.</small>
+
+            <div class="mt-2">
+                <button class="btn  btn-wide btn-outline-success" type="submit">Vytvořit vstupenky</button>
+            </div>
+            <div class="mt-2">
+                <button class="btn  btn-wide btn-outline-warning" onclick="window.location.href='/organizer/festivals'">Zpět</button>
+            </div>
+            <div class="mt-1" style="color:red;">
+                @ErrMsg
+            </div>
+            <div class="mt-1" style="color:lawngreen;">
+                @SuccMsg
+            </div>
+        </form>
+        <h1>Spravovat již vytvořené vstupenky:</h1>
+        <table> 
+            @{
+                @foreach (var line in createdTickets.OrderBy(x => x.ValidFrom)){
+                    <tr>
+                        <th style="width: 200px">@line.Name</th>
+                        @if (@line.ValidFrom.Equals(@line.ValidTo)) {
+                            <td style="width: 200px">@line.ValidTo.Day . @line.ValidTo.Month . @line.ValidTo.Year </td>
+                        }
+                        else {
+                            <td style="width: 200px">
+                                @line.ValidFrom.Day . @line.ValidFrom.Month .
+                                - @line.ValidTo.Day . @line.ValidTo.Month . @line.ValidTo.Year
+                            </td>
+                        }
+                        <td style="width: 200px">Počet kusů: @line.Count</td>
+                        <td style="width: 200px">Cena: @line.Price Kč</td>
+                        <td class="align-middle">
+                            <button class="btn btn-outline-danger" @onclick="args => DeleteTicket(line)">Smazat</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    Festival festival;
+    DateTime TicketFrom = DateTime.Today;
+    DateTime TicketTo= DateTime.Today;
+    List<TicketType> createdTickets = new List<TicketType>();
+    
+    int TicketPrice;
+    string Name = "";
+    int count = 0;
+    
+    string ErrMsg;
+    string SuccMsg;
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        festival = Database.Festival.FirstOrDefault(x => x.Id == Id);
+        if (festival == default) {
+            Navigation.NavigateTo("/unauthorized");
+            return;
+        }
+        createdTickets = Database.TicketType.Where(x => x.FestivalId == festival.Id).ToList();
+    }
+    
+
+    private async Task SubmitEdit(EventArgs args) {
+        if (TicketPrice == 0) {
+            ErrMsg = "Prosím zadejte cenu vstupenky.";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        if (TicketFrom > TicketTo) {
+            ErrMsg = "Zkontrolujte, zda datumy platosti nejsou zpřehozeny.";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        if (TicketFrom < festival.StartDate || TicketTo > festival.EndDate) {
+            ErrMsg = "Vstupenka nemůže platit mimo dobu festivalu.";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        
+        TicketType newTicket = new TicketType();
+        newTicket.FestivalId = festival.Id;
+        newTicket.Count = count;
+        newTicket.ValidFrom = TicketFrom;
+        newTicket.ValidTo = TicketTo;
+        newTicket.Name = Name;
+        newTicket.Price = TicketPrice;
+    
+        Database.TicketType.Add(newTicket);
+        Database.SaveChanges();
+        createdTickets.Add(newTicket);
+        SuccMsg = "Vstupenky vytvořeny.";
+        ErrMsg = "";
+    }
+    
+    private async Task DeleteTicket(TicketType ticket) {
+        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Jste si jistý že chcete smazat tento typ vstupenky?");
+        if (confirmed) {
+            Database.TicketType.Remove(ticket);
+            Database.SaveChanges();
+            createdTickets.Remove(ticket);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+}

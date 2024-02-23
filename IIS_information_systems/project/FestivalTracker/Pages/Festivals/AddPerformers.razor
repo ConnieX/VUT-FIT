@@ -1,0 +1,143 @@
+@page "/organizer/festivals/addperf/{Id:int}"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@using Microsoft.EntityFrameworkCore
+@inject IJSRuntime JsRuntime
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@attribute [Authorize(Policy = "Organizer")]
+@attribute [Authorize(Policy = "CreatedBy")]
+
+<div class="screen-center">
+    <iframe style="display: none;" name="sub"></iframe>
+    <div class="full-width vertical-center">
+        <h1>
+            Upravit účastníky na festival @festival.Name
+        </h1>
+        <form @onsubmit="SubmitEdit" target="sub">
+            <table>
+            @{
+                if (concerts.Count != 0) {
+                    foreach (var line in concerts) {
+                        <tr>
+                            <th style="width: 100px">@line.Performer.Name</th>
+                            <td><button class="btn btn-outline-warning" @onclick="args => DeleteConcert(line)">Odstranit z kapely</button> </td>
+                        </tr>
+                    }
+                }
+            }
+            </table>
+            @for (int i = 0; i < NewPerfomers.Count; i++) {
+                var index = i;
+                <button type="button" class="btn dropdown-toggle btn-table-dropdown" style="width: 25%" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">@perf</button>
+                <div class="dropdown-menu">
+                    @foreach (var perform in Performers) {
+                        <a class="dropdown-item" @onclick="_ => AddPerfToList(perform, index)" href="javascript:">@perform.Name</a>
+                    }
+                </div>
+                <br />
+            }
+            
+            @if (NewPerfomers.Count == 0) {
+                <button class="btn btn-normal btn-wide login-btn" @onclick="_ => AddNewLine()" href="javascript:">+</button>
+            }
+            
+            <div class="mt-2">
+                <button class="btn  btn-wide btn-outline-success" type="submit" >Uložit změny</button>
+                <button class="btn btn-normal btn-wide" onclick="window.location.href='/organizer/festivals'">Zpět na seznam festivalů</button>
+            </div>
+            
+            <div class="mt-1" style="color:red;">
+                @ErrMsg
+            </div>
+            <div class="mt-1" style="color:lawngreen;">
+                @SuccMsg
+            </div>
+          </form>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    Festival festival;
+    List<string> NewPerfomers = new List<string>();
+    List<Performer> Performers = new List<Performer>();
+    List<Concert> concerts = new List<Concert>();
+    
+    string perf;
+    
+    string ErrMsg;
+    string SuccMsg;
+ 
+    private void AddNewLine() {
+        NewPerfomers.Add("");
+    }
+    
+    private void AddPerfToList(Performer performer, int index) {
+        NewPerfomers[index] = performer.Name;
+        perf = performer.Name;
+    }
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        festival = Database.Festival.FirstOrDefault(x => x.Id == Id);
+        if (festival == default) {
+            Navigation.NavigateTo("/unauthorized");
+            return;
+        }
+        Performers = Database.Performer.ToList();
+        concerts = Database.Concert.Include(x => x.Performer).Where(x => x.FestivalId == Id).ToList();
+    }
+
+    private async void DeleteConcert(Concert line) {
+        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Jste si jistý že chcete odstranit účastníka z festivalu?");
+        if (confirmed) {
+            concerts.Remove(line);
+            NewPerfomers.Clear();
+            Database.Remove(line);
+            Database.SaveChanges();
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+    
+    private bool AddPerf() {
+        for (int j = 0; j < NewPerfomers.Count; j++) {
+            if (NewPerfomers[j] != "") {
+                var perf = Database.Performer.FirstOrDefault(x => x.Name.ToLower() == NewPerfomers[j].ToLower());
+                if (perf == null) {
+                    ErrMsg = "Kapela " + NewPerfomers[j] + " neexistuje.";
+                    return false;
+                }
+                
+                ErrMsg = "";
+                Concert newConcert = new Concert() {};
+                newConcert.FestivalId = festival.Id;
+                newConcert.PerformerId = perf.Id;
+                
+                if (Database.Concert.Find(festival.Id, perf.Id) == null) {
+                    Database.Concert.Add(newConcert);
+                    Database.SaveChanges();
+                    concerts.Add(newConcert);
+                }
+            }
+        }
+        return true;
+    }
+
+    private async Task SubmitEdit(EventArgs args) {
+        if (AddPerf() == false) {
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        
+        ErrMsg = "";
+        SuccMsg = "Změny byly uloženy.";
+        await InvokeAsync(StateHasChanged);
+        return;
+    }
+}

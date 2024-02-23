@@ -1,0 +1,107 @@
+@page "/organizer/artists/new" 
+@using FestivalTracker.Data
+@attribute [Authorize(Policy = "Organizer")]
+@inject DatabaseContext Database;
+@inject IJSRuntime JsRuntime
+
+<div class="screen-center">
+    <iframe style="display: none;" name="sub"></iframe>
+    <div class="full-width">
+        <form @onsubmit="SubmitCreation" target="sub">
+            <div class="form-group">
+                <h1>Vytvoření hudebníka</h1>
+                <div class="input-group mb-2">
+                    <input type="text" @bind="Name" placeholder="Jméno *" class="form-control text-input">
+                </div>
+                <div class="input-group mb-2">
+                    <input type="text" @bind="Surname" placeholder="Příjmení *" class="form-control text-input">
+                </div>
+                <button type="button" class="btn dropdown-toggle btn-table-dropdown" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    @perf
+                </button>
+                <div class="dropdown-menu">
+                    @{
+                        foreach (var perform in Performers) {
+                            <a class="dropdown-item" @onclick="_ => SetPerf(perform)" href="javascript:">@perform.Name</a>
+                        }
+                    }
+                    @*    <a class="dropdown-item" @onclick="_ => SetRole(user, 3)" href="javascript:">Administrátor</a> *@
+                </div>
+            </div>
+            <small class="form-text text-muted">* Tyto položky jsou povinné.</small>
+
+            <div class="mt-2">
+                <button class="btn btn-normal btn-wide login-btn" type="submit">Vytvořit hudebníka</button>
+
+            </div>
+            <div class="mt-1" style="color:red;">
+                @ErrMsg
+            </div>
+             <div class="mt-1" style="color:lawngreen;">
+                @Succ
+            </div>
+        </form>
+        <button class="btn btn-normal btn-wide" onclick="window.location.href='/organizer/artists'">Zpět na seznam</button>
+    </div>
+</div>
+
+@code {
+    string Name { get; set; }
+    string Surname { get; set; }
+
+    string perf = "Hraje/zpívá v";
+    int performerID = -1;
+
+    List<Performer> Performers = new List<Performer>();
+
+    string ErrMsg { get; set; }
+    string Succ { get; set; }
+
+    private bool CreateNewArtist(string name, string surname, out string errorMsg) {
+        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname)) {
+            errorMsg = "Zadejte prosím celé jméno hudebníka.";
+            return false;
+        }
+        
+        var artist = new Artist() {
+            Name = name, Surname = surname
+        };
+        
+        Database.Artist.Add(artist);
+        Database.SaveChanges();
+        
+        Performer performer = Database.Performer.Find(performerID);
+        
+        if (performerID > -1) {
+            PerformerHasArtist newPair = new PerformerHasArtist() {PerformerId = performer.Id, ArtistId = artist.Id};
+            Database.PerformerHasArtist.Add(newPair);
+            Database.SaveChanges();
+        }
+        errorMsg = "";
+        return true;
+    }
+
+    private async Task SubmitCreation(EventArgs args) {
+        if (!CreateNewArtist(Name, Surname, out var errorMsg)) {
+            ErrMsg = errorMsg;
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        Succ = "Hudebník " + Name + " " + Surname + " byl úspěšně přidán.";
+        await InvokeAsync(StateHasChanged);
+    }
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        foreach (var line in Database.Performer) {
+            Performers.Add(line);
+        }
+    }
+
+    public void SetPerf(Performer performer) {
+        perf = performer.Name;
+        performerID = performer.Id;
+    }
+
+}

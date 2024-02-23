@@ -1,0 +1,122 @@
+@page "/festivals"
+@using FestivalTracker.Data
+@using System.Timers
+@using Microsoft.EntityFrameworkCore
+@using FestivalTracker.Components
+@inject DatabaseContext Db
+
+<h3>Vyhledání festivalu</h3>
+<h5>Přejete-li si vyfiltrovat festivali dle vaší představy přidejte filtr:</h5>
+<div style="margin: 20px;">
+    @for (var i = 0; i < _filters.Count; i++) {
+        <div class="row" style="margin-bottom: 10px">
+            <div class="input-group col-12">
+                @{var index = i; }
+                <div class="input-group-prepend">
+                    <button style="width: 160px" class="btn btn-outline-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@_filters[index].Item2</button>
+                    <div class="dropdown-menu">
+                        @foreach (var item in _filterTypes) {
+                            <a class="dropdown-item" @onclick="@(_ => { _filters[index] = (_filters[index].Item1, @item); })" href="javascript:">@item</a>
+                        }
+                    </div>
+                </div>
+                <input type="text" @oninput="@(args => { _filters[index] = (args.Value?.ToString(),_filters[index].Item2); FilterData(); })" class="form-control text-input-filter">
+            </div>
+        </div>
+    }
+</div>
+<div style="">
+    <button hidden="@_addHidden" style="width: 160px" class="btn btn-outline-info" @onclick="_ => AddFilter()">+ Přidat filtr</button>
+</div>
+
+<div>
+    @foreach (var (festival, performers,count) in _festivals) {
+        <FestivalComponent Festival="@festival" Remaining="@count"/>        
+    }
+</div>
+
+
+
+
+@code {
+        
+    bool _addHidden = false;
+    
+    readonly List<string> _filterTypes = new List<string>() {"Název", "Účinkující", "Žánr", "Lokace"};
+
+    List<(Festival festival, List<Performer> performers,int count)> _festivals = new List<(Festival festival, List<Performer> performers,int count)>();
+
+    List<(Festival festival, List<Performer> performers ,int count)> _festivalsOrig = new List<(Festival festival, List<Performer> performers ,int count)>();
+
+    readonly List<(string query,string filter)> _filters = new List<(string query,string filter)>();
+    
+    private Timer _inputTimer;
+
+    int _filterCount;
+    
+    async Task AddFilter() {
+        if (_filterCount >= _filterTypes.Count) {
+            return;
+        }
+        _filterCount++;
+        _filters.Add(("", _filterTypes[_filterCount - 1]));
+        if (_filterCount >= _filterTypes.Count) {
+            _addHidden = true;
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+    
+     void FilterData() {
+        _inputTimer.Stop();
+        _inputTimer.Start();
+    }
+
+    private async Task OnInputTimerTick() {
+        _inputTimer.Stop();
+        await Filter();
+    }
+
+    private async Task Filter() {
+        _festivals = _festivalsOrig;
+        foreach (var (query, type) in _filters) {
+            if (string.IsNullOrEmpty(query)) {
+                continue;
+            }
+            var q = query.ToLower();
+            _festivals = type switch {
+                "Název" => _festivals.Where(x => x.Item1.Name.ToLower().Contains(q)).ToList(),
+                "Účinkující" => _festivals.Where(x => x.performers.Any(y => y.Name.ToLower().Contains(q))).ToList(),
+                "Žánr" => _festivals.Where(x => x.festival.Genre.Split(",").Any(y => y.ToLower().Contains(q))).ToList(),
+                "Lokace" => _festivals.Where(x => x.festival.Place.ToLower().Contains(q)).ToList(),
+                _ => _festivals
+                };
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+    
+    protected override void OnInitialized() {
+        _inputTimer = new Timer(200);
+        _inputTimer.Elapsed += async (s, ev) => await OnInputTimerTick();
+        _inputTimer.AutoReset = false;
+
+
+        var tickets = Db.Ticket.ToList();
+        var concerts = Db.Concert.Include(x => x.Performer).ToList();
+
+        foreach (var festival in Db.Festival.Include(x => x.TicketType)
+            .Include(x => x.Concert).Where(x => x.StartDate > DateTime.Now)
+            .OrderBy(x => x.StartDate)) {
+            var soldCount = tickets.Count(x => festival.TicketType.Any(y => y.Id == x.TicketTypeId));
+            var totalCount = festival.TicketType.Select(x => x.Count).Sum();
+            _festivalsOrig.Add((festival, concerts.Where(x => x.FestivalId == festival.Id).Select(x => x.Performer).ToList(),totalCount - soldCount));
+        }
+        _festivals = _festivalsOrig;
+
+        base.OnInitialized();
+    }
+    
+    
+}

@@ -1,0 +1,106 @@
+@page "/organizer/festivals/edit/{Id:int}"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@attribute [Authorize(Policy = "Organizer")]
+@attribute [Authorize(Policy = "CreatedBy")]
+
+<div class="screen-center">
+    <iframe style="display: none;" name="sub"></iframe>
+    <div class="full-width vertical-center">
+        <h1>
+            Změna informací o festivalu @festival.Name
+        </h1>
+          <form @onsubmit="SubmitEdit" target="sub">
+              <div class="form-group">
+                  <label>Název: *</label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind="@festival.Name" placeholder="@festival.Name" class="form-control text-input">
+                  </div>
+                  <label>Začátek: *</label>
+                  <div class="input-group mb-2">
+                      <input type="date" @bind="@festival.StartDate" placeholder="@festival.StartDate" class="form-control text-input">
+                  </div>
+                  <label>Konec: *</label>
+                  <div class="input-group mb-2">
+                      <input type="date" @bind="@festival.EndDate" placeholder="@festival.EndDate" class="form-control text-input">
+                  </div>
+                  <label>Místo konání: *</label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind="@festival.Place" placeholder="@festival.Place" class="form-control text-input">
+                  </div>
+                  <label>Žánr: </label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind="@festival.Genre" placeholder="@festival.Genre" class="form-control text-input">
+                  </div>
+                  <label>Kapacita: </label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind="@festival.Capacity" placeholder="@festival.Capacity" class="form-control text-input">
+                  </div>
+                  <label>Detaily: </label>
+                  <div class="input-group mb-2">
+                      <input type="text" @bind="@festival.Details" placeholder="@festival.Details" class="form-control text-input">
+                  </div>
+              </div>
+              <small class="form-text text-muted">* Tyto položky nesmějí zůstat prázdné.</small>
+
+              <div class="mt-2">
+                  <button class="btn  btn-wide btn-outline-success" type="submit">Uložit změny</button>
+                  <button class="btn btn-normal btn-wide" onclick="window.location.href='/organizer/festivals'">Zpět na seznam festivalů</button>
+              </div>
+              <div class="mt-1" style="color:red;">
+                  @ErrMsg
+              </div>
+              <div class="mt-1" style="color:lawngreen;">
+                  @SuccMsg
+              </div>
+          </form>
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    Festival festival;
+    string ErrMsg;
+    string SuccMsg;
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        festival = Database.Festival.FirstOrDefault(x => x.Id == Id);
+        if (festival == default) {
+            Navigation.NavigateTo("/unauthorized");
+            return;
+        }
+    }
+
+    private async Task SubmitEdit(EventArgs args) {
+        if (string.IsNullOrEmpty(festival.Name)){
+            ErrMsg = "Zadejte prosím jméno festivalu.";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        if (festival.Capacity < 0){
+            ErrMsg = "Kapacita je příliš malá.";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        if (festival.StartDate > festival.EndDate) {
+            ErrMsg = "Festival nemůže končit dříve než začne.";
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        
+        Database.Festival.Update(festival);
+        Database.SaveChanges(); //We need this save to database to create the autoincrement ID
+        ErrMsg = "";
+        SuccMsg = "Změny byly uloženy.";
+        await InvokeAsync(StateHasChanged);
+        return;
+    }
+}

@@ -1,0 +1,56 @@
+@page "/organizer/artists"
+@using FestivalTracker.Data
+@attribute [Authorize(Policy = "Organizer")]
+@inject DatabaseContext Database;
+@inject IJSRuntime JsRuntime
+
+
+<h1>Správa hudebníků</h1>
+<div class="table-responsive">
+    <table class="table table-hover ">
+        <thead>
+            <tr>
+                <th style="width: 25px;">Příjmení</th>
+                <th style="width: 25px;">Jméno</th>
+            </tr>
+        </thead>
+        @foreach (var artist in Database.Artist.OrderBy(x => x.Surname)){
+            <tr>
+                <td class="align-middle">@artist.Surname</td>
+                <td class="align-middle">@artist.Name</td>
+                <td class="align-middle" style="width: 125px;">
+                    <button class="btn btn-outline-success" onclick="parent.location='/organizer/artists/edit/@artist.Id'">Upravit</button>
+                </td>
+                <td class="align-middle" style="width: 125px;">
+                    <button class="btn btn-outline-danger" @onclick="args => DeleteArtist(artist.Id)">Smazat</button>
+                </td>
+            </tr>
+        }
+        <tr>
+            <button class="btn btn-normal btn-wide" onclick="parent.location='/organizer/artists/new'">+</button>
+        </tr>
+    </table>
+</div>
+
+
+@code {
+    private async void DeleteArtist(int id) {
+        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Jste si jistý že chcete smazat tohoto hudebníka?");
+        if (!confirmed) return;
+        var artist = await Database.Artist.FindAsync(id);
+        var performerHasArtist = Database.PerformerHasArtist.Where(x => x.ArtistId == id);
+            
+        if (performerHasArtist.Count() != 0) {
+            foreach (var line in performerHasArtist) {
+                Database.PerformerHasArtist.Remove(line);
+            }
+            await Database.SaveChangesAsync();
+        }
+            
+        if (artist != null) {
+            Database.Artist.Remove(artist);
+            await Database.SaveChangesAsync();
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+}

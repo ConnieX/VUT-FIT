@@ -1,0 +1,4 @@
+#!/bin/bash
+cd ..
+cd FestivalTracker
+dotnet ef dbcontext scaffold Name=DbConnection Microsoft.EntityFrameworkCore.SqlServer -o Data -c "DatabaseContext" -f

@@ -1,0 +1,79 @@
+@page "/register"
+@using FestivalTracker.Services
+@inject UserManager Manager
+@inject NavigationManager Navigation
+
+<div class="screen-center">
+    <iframe style="display: none;" name="sub"></iframe>
+    <div class="full-width vertical-center">
+        <h2>
+            Registrace účtu
+        </h2>
+        <h5 class="mb-4">
+            Registrace účtu vám pomůže lépe pracovat s vašimi zakoupenými vstupenkami.
+        </h5>
+        <form @onsubmit="SubmitRegister" target="sub">
+            <div class="form-group mb-2">
+                <label>Osobní informace *</label>
+                <div class="input-group mb-2">
+                    <input type="text" @bind="Name" placeholder="Jméno" class="form-control text-input">
+                    <input type="text" @bind="Surname" placeholder="Příjmení" class="form-control text-input">
+                </div>
+            </div>
+            <div class="form-group mb-2">
+                <label>Váš email *</label>
+                <input type="text" placeholder="example@example.cz" @bind="Email" class="form-control text-input"/>
+            </div>
+            <div class="form-group mb-2">
+                <label>Datum narození</label>
+                <input class="form-control text-input" type="date" placeholder="Datum narození" @bind="DateOfBirth">
+                <small class="form-text text-muted">Vaše osobní informace nebudou sdíleny s třetí stranou. </small>
+            </div>
+
+            <div class="mb-2">
+                <label>Heslo *</label>
+                <input type="password" placeholder="Heslo" @bind="Password" class="form-control text-input"/>
+            </div>
+            <div class="mb-3">
+                <input type="password" placeholder="Heslo znovu (pro ověření)" @bind="PasswordCheck" class="text-input form-control"/>
+            </div>
+            <small class="form-text text-muted">Položky označené znakem * jsou povinné</small>
+
+            <div class="mt-2">
+                <button class="btn btn-normal login-btn" type="submit">Registrovat</button>
+            </div>
+            <div class="mt-1" style="color:red;">
+                @ErrMsg
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+
+@code {
+
+    string Email { get; set; }
+    string Password { get; set; }
+    string PasswordCheck { get; set; }
+
+    string Name { get; set; }
+    string Surname { get; set; }
+    DateTime? DateOfBirth { get; set; }
+
+    string ErrMsg { get; set; }
+
+    private async Task SubmitRegister(EventArgs args) {
+        if (PasswordCheck != Password) {
+            ErrMsg = "Hesla se neshodují";
+            return;
+        }
+        if (!Manager.CreateUser(Email, Password, Name, Surname,DateOfBirth ,out var errorMsg)) {
+            ErrMsg = errorMsg;
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+        await Manager.Login(Email, Password, "");
+    }
+}

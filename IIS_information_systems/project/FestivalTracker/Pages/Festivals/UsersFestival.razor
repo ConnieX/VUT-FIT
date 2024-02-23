@@ -1,0 +1,55 @@
+@page "/organizer/festivals"
+@using FestivalTracker.Services
+@using FestivalTracker.Data
+@inject UserManager Manager
+@inject NavigationManager Navigation
+@inject DatabaseContext Database;
+@inject IJSRuntime JsRuntime
+@attribute [Authorize(Policy = "Organizer")]
+
+<h1>Festivaly které pořádáte</h1>
+<div class="table-responsive">
+    <table class="width-table">
+        @{
+            foreach (var festival in UsersFestivals) {   
+                <tr>
+                    <td class="align-middle">@festival.Name</td>
+                    <td class="align-middle">
+                        <button class="btn btn-outline-success" onclick="window.location.href='/organizer/festivals/edit/@festival.Id'">Upravit</button>
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-outline-info" onclick="window.location.href='/organizer/festivals/addperf/@festival.Id'">Upravit účinkující</button>
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-outline-warning" onclick="window.location.href='/organizer/festivals/addtickets/@festival.Id'">Vytvořit/upravit vstupenky</button>
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-outline-danger" @onclick="args => DeleteFestival(festival)">Smazat</button>
+                    </td>
+                </tr>
+            }
+        }
+        <tr>
+            <button class="btn btn-normal" style="width: 200px" onclick="window.location.href='/organizer/festivals/new'">+</button>
+        </tr>
+    </table>
+</div>
+@code {
+    public List<Festival> UsersFestivals;
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        UsersFestivals = Database.Festival.Where(x => x.CreatorId == Manager.CurrentUser.PersonId).ToList();
+    }
+
+    private async Task DeleteFestival(Festival festival) {
+        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Jste si jistý že chcete smazat festival?");
+        if (confirmed) {
+            Database.Festival.Remove(festival);
+            Database.SaveChanges();
+            UsersFestivals.Remove(festival);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+}
