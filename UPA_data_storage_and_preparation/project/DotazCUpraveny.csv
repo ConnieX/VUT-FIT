@@ -1,0 +1,615 @@
+,Okres,Počet všetkých obyvateľov,Počet obyvateľov dorast,Odbor péče,Počet poskytovateľov,Okres-kategoria,Počet všetkých obyvateľov (norm)
+0,Benešov,99742,16757,zubní lékařství,79.0,Malý,0.04781424029289912
+1,Benešov,99742,16757,všeobecné praktické lékařství,62.0,Malý,0.04781424029289912
+2,Benešov,99742,16757,kardiologie,6.0,Malý,0.04781424029289912
+3,Benešov,99742,16757,ortopedie a traumatologie pohybového ústrojí,10.0,Malý,0.04781424029289912
+4,Benešov,99742,16757,Optometrista,2.0,Malý,0.04781424029289912
+5,Benešov,99742,16757,praktické lékařství pro děti a dorost,30.0,Malý,0.04781424029289912
+6,Benešov,99742,16757,chirurgie,11.0,Malý,0.04781424029289912
+7,Benešov,99742,16757,dětské lékařství,2.0,Malý,0.04781424029289912
+8,Beroun,96403,17267,všeobecné praktické lékařství,53.0,Malý,0.045240581944310625
+9,Beroun,96403,17267,zubní lékařství,69.0,Malý,0.045240581944310625
+10,Beroun,96403,17267,chirurgie,17.0,Malý,0.045240581944310625
+11,Beroun,96403,17267,ortopedie a traumatologie pohybového ústrojí,12.0,Malý,0.045240581944310625
+12,Beroun,96403,17267,kardiologie,10.0,Malý,0.045240581944310625
+13,Beroun,96403,17267,Optometrista,7.0,Malý,0.045240581944310625
+14,Beroun,96403,17267,praktické lékařství pro děti a dorost,22.0,Malý,0.045240581944310625
+15,Beroun,96403,17267,dětské lékařství,5.0,Malý,0.045240581944310625
+16,Blansko,109104,18098,všeobecné praktické lékařství,73.0,Stredný,0.05503034974467675
+17,Blansko,109104,18098,praktické lékařství pro děti a dorost,22.0,Stredný,0.05503034974467675
+18,Blansko,109104,18098,Optometrista,9.0,Stredný,0.05503034974467675
+19,Blansko,109104,18098,zubní lékařství,54.0,Stredný,0.05503034974467675
+20,Blansko,109104,18098,chirurgie,9.0,Stredný,0.05503034974467675
+21,Blansko,109104,18098,kardiologie,5.0,Stredný,0.05503034974467675
+22,Blansko,109104,18098,dětské lékařství,10.0,Stredný,0.05503034974467675
+23,Blansko,109104,18098,ortopedie a traumatologie pohybového ústrojí,18.0,Stredný,0.05503034974467675
+24,Brno-město,382405,59790,všeobecné praktické lékařství,15.0,Veľký,0.2656872531072358
+25,Brno-město,382405,59790,zubní lékařství,15.0,Veľký,0.2656872531072358
+26,Brno-město,382405,59790,Optometrista,57.0,Veľký,0.2656872531072358
+27,Brno-město,382405,59790,kardiologie,49.0,Veľký,0.2656872531072358
+28,Brno-město,382405,59790,praktické lékařství pro děti a dorost,90.0,Veľký,0.2656872531072358
+29,Brno-město,382405,59790,ortopedie a traumatologie pohybového ústrojí,80.0,Veľký,0.2656872531072358
+30,Brno-město,382405,59790,chirurgie,100.0,Veľký,0.2656872531072358
+31,Brno-město,382405,59790,dětské lékařství,5.0,Veľký,0.2656872531072358
+32,Brno-venkov,226442,41455,praktické lékařství pro děti a dorost,44.0,Veľký,0.14547297427497832
+33,Brno-venkov,226442,41455,Optometrista,20.0,Veľký,0.14547297427497832
+34,Brno-venkov,226442,41455,zubní lékařství,67.0,Veľký,0.14547297427497832
+35,Brno-venkov,226442,41455,všeobecné praktické lékařství,132.0,Veľký,0.14547297427497832
+36,Brno-venkov,226442,41455,kardiologie,8.0,Veľký,0.14547297427497832
+37,Brno-venkov,226442,41455,ortopedie a traumatologie pohybového ústrojí,13.0,Veľký,0.14547297427497832
+38,Brno-venkov,226442,41455,chirurgie,13.0,Veľký,0.14547297427497832
+39,Bruntál,90971,13292,zubní lékařství,43.0,Malý,0.04105366605646016
+40,Bruntál,90971,13292,ortopedie a traumatologie pohybového ústrojí,18.0,Malý,0.04105366605646016
+41,Bruntál,90971,13292,všeobecné praktické lékařství,50.0,Malý,0.04105366605646016
+42,Bruntál,90971,13292,kardiologie,7.0,Malý,0.04105366605646016
+43,Bruntál,90971,13292,Optometrista,6.0,Malý,0.04105366605646016
+44,Bruntál,90971,13292,praktické lékařství pro děti a dorost,23.0,Malý,0.04105366605646016
+45,Bruntál,90971,13292,chirurgie,14.0,Malý,0.04105366605646016
+46,Bruntál,90971,13292,dětské lékařství,4.0,Malý,0.04105366605646016
+47,Břeclav,116482,17930,zubní lékařství,50.0,Stredný,0.060717217458329316
+48,Břeclav,116482,17930,praktické lékařství pro děti a dorost,26.0,Stredný,0.060717217458329316
+49,Břeclav,116482,17930,všeobecné praktické lékařství,108.0,Stredný,0.060717217458329316
+50,Břeclav,116482,17930,kardiologie,7.0,Stredný,0.060717217458329316
+51,Břeclav,116482,17930,ortopedie a traumatologie pohybového ústrojí,11.0,Stredný,0.060717217458329316
+52,Břeclav,116482,17930,Optometrista,9.0,Stredný,0.060717217458329316
+53,Břeclav,116482,17930,chirurgie,13.0,Stredný,0.060717217458329316
+54,Břeclav,116482,17930,dětské lékařství,3.0,Stredný,0.060717217458329316
+55,Cheb,91434,14089,Optometrista,7.0,Malý,0.04141054051450043
+56,Cheb,91434,14089,všeobecné praktické lékařství,52.0,Malý,0.04141054051450043
+57,Cheb,91434,14089,praktické lékařství pro děti a dorost,20.0,Malý,0.04141054051450043
+58,Cheb,91434,14089,zubní lékařství,43.0,Malý,0.04141054051450043
+59,Cheb,91434,14089,dětské lékařství,13.0,Malý,0.04141054051450043
+60,Cheb,91434,14089,ortopedie a traumatologie pohybového ústrojí,9.0,Malý,0.04141054051450043
+61,Cheb,91434,14089,chirurgie,14.0,Malý,0.04141054051450043
+62,Cheb,91434,14089,kardiologie,8.0,Malý,0.04141054051450043
+63,Chomutov,124600,19703,ortopedie a traumatologie pohybového ústrojí,29.0,Stredný,0.06697446767511321
+64,Chomutov,124600,19703,Optometrista,8.0,Stredný,0.06697446767511321
+65,Chomutov,124600,19703,zubní lékařství,53.0,Stredný,0.06697446767511321
+66,Chomutov,124600,19703,všeobecné praktické lékařství,72.0,Stredný,0.06697446767511321
+67,Chomutov,124600,19703,chirurgie,17.0,Stredný,0.06697446767511321
+68,Chomutov,124600,19703,praktické lékařství pro děti a dorost,31.0,Stredný,0.06697446767511321
+69,Chomutov,124600,19703,dětské lékařství,10.0,Stredný,0.06697446767511321
+70,Chomutov,124600,19703,kardiologie,4.0,Stredný,0.06697446767511321
+71,Chrudim,104708,16512,chirurgie,20.0,Stredný,0.051641969361210134
+72,Chrudim,104708,16512,praktické lékařství pro děti a dorost,25.0,Stredný,0.051641969361210134
+73,Chrudim,104708,16512,všeobecné praktické lékařství,61.0,Stredný,0.051641969361210134
+74,Chrudim,104708,16512,zubní lékařství,48.0,Stredný,0.051641969361210134
+75,Chrudim,104708,16512,ortopedie a traumatologie pohybového ústrojí,10.0,Stredný,0.051641969361210134
+76,Chrudim,104708,16512,Optometrista,4.0,Stredný,0.051641969361210134
+77,Chrudim,104708,16512,kardiologie,5.0,Stredný,0.051641969361210134
+78,Chrudim,104708,16512,dětské lékařství,3.0,Stredný,0.051641969361210134
+79,Domažlice,61784,9887,zubní lékařství,26.0,Malý,0.018556701030927835
+80,Domažlice,61784,9887,všeobecné praktické lékařství,32.0,Malý,0.018556701030927835
+81,Domažlice,61784,9887,praktické lékařství pro děti a dorost,12.0,Malý,0.018556701030927835
+82,Domažlice,61784,9887,chirurgie,7.0,Malý,0.018556701030927835
+83,Domažlice,61784,9887,ortopedie a traumatologie pohybového ústrojí,5.0,Malý,0.018556701030927835
+84,Domažlice,61784,9887,Optometrista,2.0,Malý,0.018556701030927835
+85,Domažlice,61784,9887,kardiologie,2.0,Malý,0.018556701030927835
+86,Domažlice,61784,9887,dětské lékařství,2.0,Malý,0.018556701030927835
+87,Děčín,128449,20711,praktické lékařství pro děti a dorost,28.0,Veľký,0.06994122747856248
+88,Děčín,128449,20711,ortopedie a traumatologie pohybového ústrojí,16.0,Veľký,0.06994122747856248
+89,Děčín,128449,20711,chirurgie,18.0,Veľký,0.06994122747856248
+90,Děčín,128449,20711,kardiologie,8.0,Veľký,0.06994122747856248
+91,Děčín,128449,20711,dětské lékařství,4.0,Veľký,0.06994122747856248
+92,Děčín,128449,20711,všeobecné praktické lékařství,70.0,Veľký,0.06994122747856248
+93,Děčín,128449,20711,zubní lékařství,53.0,Veľký,0.06994122747856248
+94,Děčín,128449,20711,Optometrista,8.0,Veľký,0.06994122747856248
+95,Frýdek-Místek,214587,34311,všeobecné praktické lékařství,119.0,Veľký,0.13633529241738124
+96,Frýdek-Místek,214587,34311,zubní lékařství,105.0,Veľký,0.13633529241738124
+97,Frýdek-Místek,214587,34311,Optometrista,14.0,Veľký,0.13633529241738124
+98,Frýdek-Místek,214587,34311,praktické lékařství pro děti a dorost,50.0,Veľký,0.13633529241738124
+99,Frýdek-Místek,214587,34311,ortopedie a traumatologie pohybového ústrojí,25.0,Veľký,0.13633529241738124
+100,Frýdek-Místek,214587,34311,kardiologie,12.0,Veľký,0.13633529241738124
+101,Frýdek-Místek,214587,34311,chirurgie,20.0,Veľký,0.13633529241738124
+102,Frýdek-Místek,214587,34311,dětské lékařství,9.0,Veľký,0.13633529241738124
+103,Havlíčkův Brod,94612,14938,praktické lékařství pro děti a dorost,35.0,Malý,0.04386010212929955
+104,Havlíčkův Brod,94612,14938,zubní lékařství,54.0,Malý,0.04386010212929955
+105,Havlíčkův Brod,94612,14938,všeobecné praktické lékařství,126.0,Malý,0.04386010212929955
+106,Havlíčkův Brod,94612,14938,ortopedie a traumatologie pohybového ústrojí,14.0,Malý,0.04386010212929955
+107,Havlíčkův Brod,94612,14938,Optometrista,4.0,Malý,0.04386010212929955
+108,Havlíčkův Brod,94612,14938,chirurgie,10.0,Malý,0.04386010212929955
+109,Havlíčkův Brod,94612,14938,kardiologie,3.0,Malý,0.04386010212929955
+110,Havlíčkův Brod,94612,14938,dětské lékařství,9.0,Malý,0.04386010212929955
+111,Hlavní město Praha,1335084,212824,všeobecné praktické lékařství,15.0,Veľký,1.0
+112,Hlavní město Praha,1335084,212824,ortopedie a traumatologie pohybového ústrojí,15.0,Veľký,1.0
+113,Hlavní město Praha,1335084,212824,Optometrista,126.0,Veľký,1.0
+114,Hlavní město Praha,1335084,212824,kardiologie,15.0,Veľký,1.0
+115,Hlavní město Praha,1335084,212824,zubní lékařství,15.0,Veľký,1.0
+116,Hlavní město Praha,1335084,212824,praktické lékařství pro děti a dorost,15.0,Veľký,1.0
+117,Hlavní město Praha,1335084,212824,chirurgie,15.0,Veľký,1.0
+118,Hlavní město Praha,1335084,212824,dětské lékařství,40.0,Veľký,1.0
+119,Hodonín,153607,22176,všeobecné praktické lékařství,119.0,Veľký,0.08933269101069467
+120,Hodonín,153607,22176,zubní lékařství,90.0,Veľký,0.08933269101069467
+121,Hodonín,153607,22176,chirurgie,15.0,Veľký,0.08933269101069467
+122,Hodonín,153607,22176,ortopedie a traumatologie pohybového ústrojí,15.0,Veľký,0.08933269101069467
+123,Hodonín,153607,22176,praktické lékařství pro děti a dorost,50.0,Veľký,0.08933269101069467
+124,Hodonín,153607,22176,Optometrista,8.0,Veľký,0.08933269101069467
+125,Hodonín,153607,22176,kardiologie,6.0,Veľký,0.08933269101069467
+126,Hodonín,153607,22176,dětské lékařství,11.0,Veľký,0.08933269101069467
+127,Hradec Králové,164435,26050,všeobecné praktické lékařství,96.0,Veľký,0.09767877444840543
+128,Hradec Králové,164435,26050,zubní lékařství,118.0,Veľký,0.09767877444840543
+129,Hradec Králové,164435,26050,chirurgie,24.0,Veľký,0.09767877444840543
+130,Hradec Králové,164435,26050,kardiologie,12.0,Veľký,0.09767877444840543
+131,Hradec Králové,164435,26050,praktické lékařství pro děti a dorost,35.0,Veľký,0.09767877444840543
+132,Hradec Králové,164435,26050,ortopedie a traumatologie pohybového ústrojí,31.0,Veľký,0.09767877444840543
+133,Hradec Králové,164435,26050,Optometrista,16.0,Veľký,0.09767877444840543
+134,Hradec Králové,164435,26050,dětské lékařství,3.0,Veľký,0.09767877444840543
+135,Jablonec nad Nisou,90198,14851,zubní lékařství,49.0,Malý,0.040457847576837846
+136,Jablonec nad Nisou,90198,14851,všeobecné praktické lékařství,53.0,Malý,0.040457847576837846
+137,Jablonec nad Nisou,90198,14851,kardiologie,4.0,Malý,0.040457847576837846
+138,Jablonec nad Nisou,90198,14851,chirurgie,16.0,Malý,0.040457847576837846
+139,Jablonec nad Nisou,90198,14851,Optometrista,7.0,Malý,0.040457847576837846
+140,Jablonec nad Nisou,90198,14851,ortopedie a traumatologie pohybového ústrojí,8.0,Malý,0.040457847576837846
+141,Jablonec nad Nisou,90198,14851,praktické lékařství pro děti a dorost,21.0,Malý,0.040457847576837846
+142,Jablonec nad Nisou,90198,14851,dětské lékařství,4.0,Malý,0.040457847576837846
+143,Jeseník,37709,5327,zubní lékařství,24.0,Malý,0.0
+144,Jeseník,37709,5327,Optometrista,2.0,Malý,0.0
+145,Jeseník,37709,5327,všeobecné praktické lékařství,22.0,Malý,0.0
+146,Jeseník,37709,5327,praktické lékařství pro děti a dorost,12.0,Malý,0.0
+147,Jeseník,37709,5327,ortopedie a traumatologie pohybového ústrojí,5.0,Malý,0.0
+148,Jeseník,37709,5327,chirurgie,3.0,Malý,0.0
+149,Jeseník,37709,5327,dětské lékařství,3.0,Malý,0.0
+150,Jeseník,37709,5327,kardiologie,1.0,Malý,0.0
+151,Jihlava,113664,18551,chirurgie,20.0,Stredný,0.05854513922343193
+152,Jihlava,113664,18551,všeobecné praktické lékařství,159.0,Stredný,0.05854513922343193
+153,Jihlava,113664,18551,zubní lékařství,60.0,Stredný,0.05854513922343193
+154,Jihlava,113664,18551,kardiologie,9.0,Stredný,0.05854513922343193
+155,Jihlava,113664,18551,ortopedie a traumatologie pohybového ústrojí,15.0,Stredný,0.05854513922343193
+156,Jihlava,113664,18551,praktické lékařství pro děti a dorost,63.0,Stredný,0.05854513922343193
+157,Jihlava,113664,18551,Optometrista,7.0,Stredný,0.05854513922343193
+158,Jihlava,113664,18551,dětské lékařství,4.0,Stredný,0.05854513922343193
+159,Jindřichův Hradec,90279,13625,všeobecné praktické lékařství,51.0,Malý,0.040520281337315736
+160,Jindřichův Hradec,90279,13625,zubní lékařství,84.0,Malý,0.040520281337315736
+161,Jindřichův Hradec,90279,13625,ortopedie a traumatologie pohybového ústrojí,7.0,Malý,0.040520281337315736
+162,Jindřichův Hradec,90279,13625,Optometrista,8.0,Malý,0.040520281337315736
+163,Jindřichův Hradec,90279,13625,praktické lékařství pro děti a dorost,26.0,Malý,0.040520281337315736
+164,Jindřichův Hradec,90279,13625,chirurgie,15.0,Malý,0.040520281337315736
+165,Jindřichův Hradec,90279,13625,kardiologie,4.0,Malý,0.040520281337315736
+166,Jindřichův Hradec,90279,13625,dětské lékařství,5.0,Malý,0.040520281337315736
+167,Jičín,80134,12496,všeobecné praktické lékařství,52.0,Malý,0.03270064553425185
+168,Jičín,80134,12496,zubní lékařství,39.0,Malý,0.03270064553425185
+169,Jičín,80134,12496,praktické lékařství pro děti a dorost,17.0,Malý,0.03270064553425185
+170,Jičín,80134,12496,Optometrista,7.0,Malý,0.03270064553425185
+171,Jičín,80134,12496,chirurgie,9.0,Malý,0.03270064553425185
+172,Jičín,80134,12496,kardiologie,6.0,Malý,0.03270064553425185
+173,Jičín,80134,12496,ortopedie a traumatologie pohybového ústrojí,11.0,Malý,0.03270064553425185
+174,Jičín,80134,12496,dětské lékařství,2.0,Malý,0.03270064553425185
+175,Karlovy Vary,114374,16668,dětské lékařství,12.0,Stredný,0.059092398111571444
+176,Karlovy Vary,114374,16668,všeobecné praktické lékařství,65.0,Stredný,0.059092398111571444
+177,Karlovy Vary,114374,16668,ortopedie a traumatologie pohybového ústrojí,32.0,Stredný,0.059092398111571444
+178,Karlovy Vary,114374,16668,zubní lékařství,65.0,Stredný,0.059092398111571444
+179,Karlovy Vary,114374,16668,praktické lékařství pro děti a dorost,23.0,Stredný,0.059092398111571444
+180,Karlovy Vary,114374,16668,Optometrista,9.0,Stredný,0.059092398111571444
+181,Karlovy Vary,114374,16668,kardiologie,13.0,Stredný,0.059092398111571444
+182,Karlovy Vary,114374,16668,chirurgie,21.0,Stredný,0.059092398111571444
+183,Karviná,242779,35473,Optometrista,17.0,Veľký,0.15806532421235187
+184,Karviná,242779,35473,zubní lékařství,115.0,Veľký,0.15806532421235187
+185,Karviná,242779,35473,praktické lékařství pro děti a dorost,48.0,Veľký,0.15806532421235187
+186,Karviná,242779,35473,kardiologie,22.0,Veľký,0.15806532421235187
+187,Karviná,242779,35473,všeobecné praktické lékařství,124.0,Veľký,0.15806532421235187
+188,Karviná,242779,35473,ortopedie a traumatologie pohybového ústrojí,32.0,Veľký,0.15806532421235187
+189,Karviná,242779,35473,chirurgie,32.0,Veľký,0.15806532421235187
+190,Karviná,242779,35473,dětské lékařství,7.0,Veľký,0.15806532421235187
+191,Kladno,166845,28172,praktické lékařství pro děti a dorost,31.0,Veľký,0.0995363715194142
+192,Kladno,166845,28172,všeobecné praktické lékařství,86.0,Veľký,0.0995363715194142
+193,Kladno,166845,28172,zubní lékařství,113.0,Veľký,0.0995363715194142
+194,Kladno,166845,28172,Optometrista,12.0,Veľký,0.0995363715194142
+195,Kladno,166845,28172,chirurgie,18.0,Veľký,0.0995363715194142
+196,Kladno,166845,28172,ortopedie a traumatologie pohybového ústrojí,43.0,Veľký,0.0995363715194142
+197,Kladno,166845,28172,kardiologie,9.0,Veľký,0.0995363715194142
+198,Kladno,166845,28172,dětské lékařství,6.0,Veľký,0.0995363715194142
+199,Klatovy,86253,12745,ortopedie a traumatologie pohybového ústrojí,9.0,Malý,0.03741709220541478
+200,Klatovy,86253,12745,všeobecné praktické lékařství,52.0,Malý,0.03741709220541478
+201,Klatovy,86253,12745,zubní lékařství,41.0,Malý,0.03741709220541478
+202,Klatovy,86253,12745,praktické lékařství pro děti a dorost,19.0,Malý,0.03741709220541478
+203,Klatovy,86253,12745,chirurgie,9.0,Malý,0.03741709220541478
+204,Klatovy,86253,12745,dětské lékařství,3.0,Malý,0.03741709220541478
+205,Klatovy,86253,12745,Optometrista,3.0,Malý,0.03741709220541478
+206,Klatovy,86253,12745,kardiologie,3.0,Malý,0.03741709220541478
+207,Kolín,103773,17816,zubní lékařství,67.0,Stredný,0.05092128336063204
+208,Kolín,103773,17816,všeobecné praktické lékařství,53.0,Stredný,0.05092128336063204
+209,Kolín,103773,17816,Optometrista,7.0,Stredný,0.05092128336063204
+210,Kolín,103773,17816,praktické lékařství pro děti a dorost,27.0,Stredný,0.05092128336063204
+211,Kolín,103773,17816,ortopedie a traumatologie pohybového ústrojí,7.0,Stredný,0.05092128336063204
+212,Kolín,103773,17816,chirurgie,13.0,Stredný,0.05092128336063204
+213,Kolín,103773,17816,dětské lékařství,5.0,Stredný,0.05092128336063204
+214,Kolín,103773,17816,kardiologie,5.0,Stredný,0.05092128336063204
+215,Kroměříž,104826,15985,Optometrista,6.0,Stredný,0.05173292224684459
+216,Kroměříž,104826,15985,zubní lékařství,55.0,Stredný,0.05173292224684459
+217,Kroměříž,104826,15985,kardiologie,7.0,Stredný,0.05173292224684459
+218,Kroměříž,104826,15985,všeobecné praktické lékařství,74.0,Stredný,0.05173292224684459
+219,Kroměříž,104826,15985,ortopedie a traumatologie pohybového ústrojí,15.0,Stredný,0.05173292224684459
+220,Kroměříž,104826,15985,chirurgie,8.0,Stredný,0.05173292224684459
+221,Kroměříž,104826,15985,praktické lékařství pro děti a dorost,23.0,Stredný,0.05173292224684459
+222,Kroměříž,104826,15985,dětské lékařství,20.0,Stredný,0.05173292224684459
+223,Kutná Hora,76310,11883,zubní lékařství,54.0,Malý,0.029753155409962425
+224,Kutná Hora,76310,11883,všeobecné praktické lékařství,55.0,Malý,0.029753155409962425
+225,Kutná Hora,76310,11883,praktické lékařství pro děti a dorost,20.0,Malý,0.029753155409962425
+226,Kutná Hora,76310,11883,ortopedie a traumatologie pohybového ústrojí,9.0,Malý,0.029753155409962425
+227,Kutná Hora,76310,11883,Optometrista,1.0,Malý,0.029753155409962425
+228,Kutná Hora,76310,11883,chirurgie,8.0,Malý,0.029753155409962425
+229,Kutná Hora,76310,11883,kardiologie,4.0,Malý,0.029753155409962425
+230,Kutná Hora,76310,11883,dětské lékařství,2.0,Malý,0.029753155409962425
+231,Liberec,175465,29576,všeobecné praktické lékařství,108.0,Veľký,0.10618055689372773
+232,Liberec,175465,29576,chirurgie,14.0,Veľký,0.10618055689372773
+233,Liberec,175465,29576,zubní lékařství,106.0,Veľký,0.10618055689372773
+234,Liberec,175465,29576,praktické lékařství pro děti a dorost,35.0,Veľký,0.10618055689372773
+235,Liberec,175465,29576,Optometrista,13.0,Veľký,0.10618055689372773
+236,Liberec,175465,29576,ortopedie a traumatologie pohybového ústrojí,16.0,Veľký,0.10618055689372773
+237,Liberec,175465,29576,kardiologie,9.0,Veľký,0.10618055689372773
+238,Liberec,175465,29576,dětské lékařství,3.0,Veľký,0.10618055689372773
+239,Litoměřice,119177,19440,Optometrista,10.0,Stredný,0.06279448887176028
+240,Litoměřice,119177,19440,zubní lékařství,48.0,Stredný,0.06279448887176028
+241,Litoměřice,119177,19440,všeobecné praktické lékařství,67.0,Stredný,0.06279448887176028
+242,Litoměřice,119177,19440,dětské lékařství,7.0,Stredný,0.06279448887176028
+243,Litoměřice,119177,19440,chirurgie,18.0,Stredný,0.06279448887176028
+244,Litoměřice,119177,19440,kardiologie,3.0,Stredný,0.06279448887176028
+245,Litoměřice,119177,19440,ortopedie a traumatologie pohybového ústrojí,24.0,Stredný,0.06279448887176028
+246,Litoměřice,119177,19440,praktické lékařství pro děti a dorost,31.0,Stredný,0.06279448887176028
+247,Louny,86364,13977,ortopedie a traumatologie pohybového ústrojí,14.0,Malý,0.03750264958088448
+248,Louny,86364,13977,zubní lékařství,38.0,Malý,0.03750264958088448
+249,Louny,86364,13977,všeobecné praktické lékařství,49.0,Malý,0.03750264958088448
+250,Louny,86364,13977,praktické lékařství pro děti a dorost,25.0,Malý,0.03750264958088448
+251,Louny,86364,13977,kardiologie,3.0,Malý,0.03750264958088448
+252,Louny,86364,13977,Optometrista,10.0,Malý,0.03750264958088448
+253,Louny,86364,13977,chirurgie,14.0,Malý,0.03750264958088448
+254,Louny,86364,13977,dětské lékařství,6.0,Malý,0.03750264958088448
+255,Mladá Boleslav,131042,21681,všeobecné praktické lékařství,71.0,Veľký,0.07193987860102129
+256,Mladá Boleslav,131042,21681,zubní lékařství,109.0,Veľký,0.07193987860102129
+257,Mladá Boleslav,131042,21681,kardiologie,9.0,Veľký,0.07193987860102129
+258,Mladá Boleslav,131042,21681,chirurgie,20.0,Veľký,0.07193987860102129
+259,Mladá Boleslav,131042,21681,praktické lékařství pro děti a dorost,27.0,Veľký,0.07193987860102129
+260,Mladá Boleslav,131042,21681,ortopedie a traumatologie pohybového ústrojí,27.0,Veľký,0.07193987860102129
+261,Mladá Boleslav,131042,21681,Optometrista,7.0,Veľký,0.07193987860102129
+262,Mladá Boleslav,131042,21681,dětské lékařství,4.0,Veľký,0.07193987860102129
+263,Most,110933,17524,Optometrista,13.0,Stredný,0.05644011947201079
+264,Most,110933,17524,chirurgie,8.0,Stredný,0.05644011947201079
+265,Most,110933,17524,zubní lékařství,48.0,Stredný,0.05644011947201079
+266,Most,110933,17524,všeobecné praktické lékařství,56.0,Stredný,0.05644011947201079
+267,Most,110933,17524,praktické lékařství pro děti a dorost,33.0,Stredný,0.05644011947201079
+268,Most,110933,17524,ortopedie a traumatologie pohybového ústrojí,11.0,Stredný,0.05644011947201079
+269,Most,110933,17524,kardiologie,3.0,Stredný,0.05644011947201079
+270,Most,110933,17524,dětské lékařství,3.0,Stredný,0.05644011947201079
+271,Mělník,109987,18851,Optometrista,8.0,Stredný,0.05571095481260237
+272,Mělník,109987,18851,zubní lékařství,65.0,Stredný,0.05571095481260237
+273,Mělník,109987,18851,všeobecné praktické lékařství,65.0,Stredný,0.05571095481260237
+274,Mělník,109987,18851,kardiologie,9.0,Stredný,0.05571095481260237
+275,Mělník,109987,18851,chirurgie,11.0,Stredný,0.05571095481260237
+276,Mělník,109987,18851,praktické lékařství pro děti a dorost,21.0,Stredný,0.05571095481260237
+277,Mělník,109987,18851,ortopedie a traumatologie pohybového ústrojí,22.0,Stredný,0.05571095481260237
+278,Mělník,109987,18851,dětské lékařství,3.0,Stredný,0.05571095481260237
+279,Nový Jičín,151398,24508,všeobecné praktické lékařství,83.0,Veľký,0.08763002216013104
+280,Nový Jičín,151398,24508,zubní lékařství,72.0,Veľký,0.08763002216013104
+281,Nový Jičín,151398,24508,ortopedie a traumatologie pohybového ústrojí,15.0,Veľký,0.08763002216013104
+282,Nový Jičín,151398,24508,praktické lékařství pro děti a dorost,29.0,Veľký,0.08763002216013104
+283,Nový Jičín,151398,24508,kardiologie,9.0,Veľký,0.08763002216013104
+284,Nový Jičín,151398,24508,Optometrista,4.0,Veľký,0.08763002216013104
+285,Nový Jičín,151398,24508,chirurgie,21.0,Veľký,0.08763002216013104
+286,Nový Jičín,151398,24508,dětské lékařství,3.0,Veľký,0.08763002216013104
+287,Nymburk,101698,17908,ortopedie a traumatologie pohybového ústrojí,15.0,Stredný,0.04932189999036516
+288,Nymburk,101698,17908,všeobecné praktické lékařství,51.0,Stredný,0.04932189999036516
+289,Nymburk,101698,17908,zubní lékařství,84.0,Stredný,0.04932189999036516
+290,Nymburk,101698,17908,kardiologie,14.0,Stredný,0.04932189999036516
+291,Nymburk,101698,17908,Optometrista,10.0,Stredný,0.04932189999036516
+292,Nymburk,101698,17908,praktické lékařství pro děti a dorost,26.0,Stredný,0.04932189999036516
+293,Nymburk,101698,17908,chirurgie,15.0,Stredný,0.04932189999036516
+294,Nymburk,101698,17908,dětské lékařství,2.0,Stredný,0.04932189999036516
+295,Náchod,109487,16921,praktické lékařství pro děti a dorost,22.0,Stredný,0.05532556122940553
+296,Náchod,109487,16921,všeobecné praktické lékařství,67.0,Stredný,0.05532556122940553
+297,Náchod,109487,16921,Optometrista,6.0,Stredný,0.05532556122940553
+298,Náchod,109487,16921,zubní lékařství,58.0,Stredný,0.05532556122940553
+299,Náchod,109487,16921,kardiologie,6.0,Stredný,0.05532556122940553
+300,Náchod,109487,16921,ortopedie a traumatologie pohybového ústrojí,12.0,Stredný,0.05532556122940553
+301,Náchod,109487,16921,chirurgie,12.0,Stredný,0.05532556122940553
+302,Náchod,109487,16921,dětské lékařství,2.0,Stredný,0.05532556122940553
+303,Olomouc,235441,38916,všeobecné praktické lékařství,161.0,Veľký,0.15240928798535505
+304,Olomouc,235441,38916,zubní lékařství,15.0,Veľký,0.15240928798535505
+305,Olomouc,235441,38916,ortopedie a traumatologie pohybového ústrojí,31.0,Veľký,0.15240928798535505
+306,Olomouc,235441,38916,Optometrista,21.0,Veľký,0.15240928798535505
+307,Olomouc,235441,38916,praktické lékařství pro děti a dorost,67.0,Veľký,0.15240928798535505
+308,Olomouc,235441,38916,chirurgie,43.0,Veľký,0.15240928798535505
+309,Olomouc,235441,38916,dětské lékařství,14.0,Veľký,0.15240928798535505
+310,Olomouc,235441,38916,kardiologie,21.0,Veľký,0.15240928798535505
+311,Opava,175777,27912,všeobecné praktické lékařství,111.0,Veľký,0.10642104248964254
+312,Opava,175777,27912,chirurgie,17.0,Veľký,0.10642104248964254
+313,Opava,175777,27912,Optometrista,15.0,Veľký,0.10642104248964254
+314,Opava,175777,27912,ortopedie a traumatologie pohybového ústrojí,19.0,Veľký,0.10642104248964254
+315,Opava,175777,27912,praktické lékařství pro děti a dorost,32.0,Veľký,0.10642104248964254
+316,Opava,175777,27912,zubní lékařství,80.0,Veľký,0.10642104248964254
+317,Opava,175777,27912,kardiologie,11.0,Veľký,0.10642104248964254
+318,Opava,175777,27912,dětské lékařství,7.0,Veľký,0.10642104248964254
+319,Ostrava-město,317322,48273,zubní lékařství,15.0,Veľký,0.21552211195683593
+320,Ostrava-město,317322,48273,Optometrista,27.0,Veľký,0.21552211195683593
+321,Ostrava-město,317322,48273,praktické lékařství pro děti a dorost,63.0,Veľký,0.21552211195683593
+322,Ostrava-město,317322,48273,všeobecné praktické lékařství,15.0,Veľký,0.21552211195683593
+323,Ostrava-město,317322,48273,kardiologie,45.0,Veľký,0.21552211195683593
+324,Ostrava-město,317322,48273,chirurgie,45.0,Veľký,0.21552211195683593
+325,Ostrava-město,317322,48273,ortopedie a traumatologie pohybového ústrojí,41.0,Veľký,0.21552211195683593
+326,Ostrava-město,317322,48273,dětské lékařství,15.0,Veľký,0.21552211195683593
+327,Pardubice,176137,28419,zubní lékařství,93.0,Veľký,0.10669852586954427
+328,Pardubice,176137,28419,praktické lékařství pro děti a dorost,33.0,Veľký,0.10669852586954427
+329,Pardubice,176137,28419,všeobecné praktické lékařství,98.0,Veľký,0.10669852586954427
+330,Pardubice,176137,28419,Optometrista,13.0,Veľký,0.10669852586954427
+331,Pardubice,176137,28419,ortopedie a traumatologie pohybového ústrojí,20.0,Veľký,0.10669852586954427
+332,Pardubice,176137,28419,kardiologie,9.0,Veľký,0.10669852586954427
+333,Pardubice,176137,28419,chirurgie,29.0,Veľký,0.10669852586954427
+334,Pardubice,176137,28419,dětské lékařství,5.0,Veľký,0.10669852586954427
+335,Pelhřimov,72298,10664,všeobecné praktické lékařství,92.0,Malý,0.026660757298390982
+336,Pelhřimov,72298,10664,zubní lékařství,35.0,Malý,0.026660757298390982
+337,Pelhřimov,72298,10664,chirurgie,12.0,Malý,0.026660757298390982
+338,Pelhřimov,72298,10664,Optometrista,10.0,Malý,0.026660757298390982
+339,Pelhřimov,72298,10664,praktické lékařství pro děti a dorost,26.0,Malý,0.026660757298390982
+340,Pelhřimov,72298,10664,dětské lékařství,6.0,Malý,0.026660757298390982
+341,Pelhřimov,72298,10664,ortopedie a traumatologie pohybového ústrojí,8.0,Malý,0.026660757298390982
+342,Pelhřimov,72298,10664,kardiologie,2.0,Malý,0.026660757298390982
+343,Plzeň-jih,63615,9963,všeobecné praktické lékařství,41.0,Malý,0.019968012332594664
+344,Plzeň-jih,63615,9963,praktické lékařství pro děti a dorost,17.0,Malý,0.019968012332594664
+345,Plzeň-jih,63615,9963,zubní lékařství,24.0,Malý,0.019968012332594664
+346,Plzeň-jih,63615,9963,kardiologie,3.0,Malý,0.019968012332594664
+347,Plzeň-jih,63615,9963,chirurgie,6.0,Malý,0.019968012332594664
+348,Plzeň-jih,63615,9963,ortopedie a traumatologie pohybového ústrojí,7.0,Malý,0.019968012332594664
+349,Plzeň-jih,63615,9963,Optometrista,1.0,Malý,0.019968012332594664
+350,Plzeň-jih,63615,9963,dětské lékařství,1.0,Malý,0.019968012332594664
+351,Plzeň-město,194840,30268,chirurgie,39.0,Veľký,0.12111455824260527
+352,Plzeň-město,194840,30268,ortopedie a traumatologie pohybového ústrojí,44.0,Veľký,0.12111455824260527
+353,Plzeň-město,194840,30268,praktické lékařství pro děti a dorost,42.0,Veľký,0.12111455824260527
+354,Plzeň-město,194840,30268,zubní lékařství,170.0,Veľký,0.12111455824260527
+355,Plzeň-město,194840,30268,Optometrista,17.0,Veľký,0.12111455824260527
+356,Plzeň-město,194840,30268,všeobecné praktické lékařství,109.0,Veľký,0.12111455824260527
+357,Plzeň-město,194840,30268,dětské lékařství,9.0,Veľký,0.12111455824260527
+358,Plzeň-město,194840,30268,kardiologie,14.0,Veľký,0.12111455824260527
+359,Plzeň-sever,80671,13154,zubní lékařství,28.0,Malý,0.03311455824260526
+360,Plzeň-sever,80671,13154,praktické lékařství pro děti a dorost,19.0,Malý,0.03311455824260526
+361,Plzeň-sever,80671,13154,chirurgie,5.0,Malý,0.03311455824260526
+362,Plzeň-sever,80671,13154,ortopedie a traumatologie pohybového ústrojí,4.0,Malý,0.03311455824260526
+363,Plzeň-sever,80671,13154,kardiologie,3.0,Malý,0.03311455824260526
+364,Plzeň-sever,80671,13154,všeobecné praktické lékařství,45.0,Malý,0.03311455824260526
+365,Plzeň-sever,80671,13154,Optometrista,4.0,Malý,0.03311455824260526
+366,Plzeň-sever,80671,13154,dětské lékařství,4.0,Malý,0.03311455824260526
+367,Prachatice,50779,7916,praktické lékařství pro děti a dorost,13.0,Malý,0.010074188264765391
+368,Prachatice,50779,7916,všeobecné praktické lékařství,37.0,Malý,0.010074188264765391
+369,Prachatice,50779,7916,zubní lékařství,22.0,Malý,0.010074188264765391
+370,Prachatice,50779,7916,chirurgie,5.0,Malý,0.010074188264765391
+371,Prachatice,50779,7916,Optometrista,5.0,Malý,0.010074188264765391
+372,Prachatice,50779,7916,kardiologie,2.0,Malý,0.010074188264765391
+373,Prachatice,50779,7916,ortopedie a traumatologie pohybového ústrojí,5.0,Malý,0.010074188264765391
+374,Prachatice,50779,7916,dětské lékařství,2.0,Malý,0.010074188264765391
+375,Praha-východ,188939,40033,zubní lékařství,96.0,Veľký,0.11656614317371616
+376,Praha-východ,188939,40033,všeobecné praktické lékařství,76.0,Veľký,0.11656614317371616
+377,Praha-východ,188939,40033,Optometrista,10.0,Veľký,0.11656614317371616
+378,Praha-východ,188939,40033,dětské lékařství,2.0,Veľký,0.11656614317371616
+379,Praha-východ,188939,40033,kardiologie,12.0,Veľký,0.11656614317371616
+380,Praha-východ,188939,40033,praktické lékařství pro děti a dorost,30.0,Veľký,0.11656614317371616
+381,Praha-východ,188939,40033,ortopedie a traumatologie pohybového ústrojí,13.0,Veľký,0.11656614317371616
+382,Praha-východ,188939,40033,chirurgie,11.0,Veľký,0.11656614317371616
+383,Praha-západ,152285,31887,všeobecné praktické lékařství,56.0,Veľký,0.08831371037672223
+384,Praha-západ,152285,31887,zubní lékařství,80.0,Veľký,0.08831371037672223
+385,Praha-západ,152285,31887,ortopedie a traumatologie pohybového ústrojí,28.0,Veľký,0.08831371037672223
+386,Praha-západ,152285,31887,Optometrista,5.0,Veľký,0.08831371037672223
+387,Praha-západ,152285,31887,kardiologie,7.0,Veľký,0.08831371037672223
+388,Praha-západ,152285,31887,praktické lékařství pro děti a dorost,27.0,Veľký,0.08831371037672223
+389,Praha-západ,152285,31887,chirurgie,5.0,Veľký,0.08831371037672223
+390,Prostějov,108504,17131,všeobecné praktické lékařství,78.0,Stredný,0.05456787744484054
+391,Prostějov,108504,17131,ortopedie a traumatologie pohybového ústrojí,22.0,Stredný,0.05456787744484054
+392,Prostějov,108504,17131,praktické lékařství pro děti a dorost,31.0,Stredný,0.05456787744484054
+393,Prostějov,108504,17131,zubní lékařství,68.0,Stredný,0.05456787744484054
+394,Prostějov,108504,17131,chirurgie,27.0,Stredný,0.05456787744484054
+395,Prostějov,108504,17131,Optometrista,9.0,Stredný,0.05456787744484054
+396,Prostějov,108504,17131,dětské lékařství,6.0,Stredný,0.05456787744484054
+397,Prostějov,108504,17131,kardiologie,4.0,Stredný,0.05456787744484054
+398,Písek,71588,10932,všeobecné praktické lékařství,49.0,Malý,0.02611349841025147
+399,Písek,71588,10932,zubní lékařství,59.0,Malý,0.02611349841025147
+400,Písek,71588,10932,Optometrista,7.0,Malý,0.02611349841025147
+401,Písek,71588,10932,ortopedie a traumatologie pohybového ústrojí,13.0,Malý,0.02611349841025147
+402,Písek,71588,10932,praktické lékařství pro děti a dorost,22.0,Malý,0.02611349841025147
+403,Písek,71588,10932,chirurgie,5.0,Malý,0.02611349841025147
+404,Písek,71588,10932,kardiologie,6.0,Malý,0.02611349841025147
+405,Písek,71588,10932,dětské lékařství,1.0,Malý,0.02611349841025147
+406,Přerov,128901,19281,zubní lékařství,65.0,Veľký,0.07028962327777243
+407,Přerov,128901,19281,Optometrista,16.0,Veľký,0.07028962327777243
+408,Přerov,128901,19281,ortopedie a traumatologie pohybového ústrojí,12.0,Veľký,0.07028962327777243
+409,Přerov,128901,19281,všeobecné praktické lékařství,83.0,Veľký,0.07028962327777243
+410,Přerov,128901,19281,kardiologie,11.0,Veľký,0.07028962327777243
+411,Přerov,128901,19281,dětské lékařství,7.0,Veľký,0.07028962327777243
+412,Přerov,128901,19281,praktické lékařství pro děti a dorost,29.0,Veľký,0.07028962327777243
+413,Přerov,128901,19281,chirurgie,13.0,Veľký,0.07028962327777243
+414,Příbram,115236,18173,zubní lékařství,86.0,Stredný,0.05975681664900279
+415,Příbram,115236,18173,ortopedie a traumatologie pohybového ústrojí,27.0,Stredný,0.05975681664900279
+416,Příbram,115236,18173,chirurgie,19.0,Stredný,0.05975681664900279
+417,Příbram,115236,18173,všeobecné praktické lékařství,68.0,Stredný,0.05975681664900279
+418,Příbram,115236,18173,Optometrista,8.0,Stredný,0.05975681664900279
+419,Příbram,115236,18173,praktické lékařství pro děti a dorost,31.0,Stredný,0.05975681664900279
+420,Příbram,115236,18173,kardiologie,7.0,Stredný,0.05975681664900279
+421,Příbram,115236,18173,dětské lékařství,2.0,Stredný,0.05975681664900279
+422,Rakovník,55737,8853,všeobecné praktické lékařství,37.0,Malý,0.013895751035745255
+423,Rakovník,55737,8853,praktické lékařství pro děti a dorost,10.0,Malý,0.013895751035745255
+424,Rakovník,55737,8853,Optometrista,7.0,Malý,0.013895751035745255
+425,Rakovník,55737,8853,zubní lékařství,48.0,Malý,0.013895751035745255
+426,Rakovník,55737,8853,kardiologie,4.0,Malý,0.013895751035745255
+427,Rakovník,55737,8853,chirurgie,10.0,Malý,0.013895751035745255
+428,Rakovník,55737,8853,ortopedie a traumatologie pohybového ústrojí,4.0,Malý,0.013895751035745255
+429,Rakovník,55737,8853,dětské lékařství,1.0,Malý,0.013895751035745255
+430,Rokycany,49489,7742,zubní lékařství,23.0,Malý,0.009079872820117544
+431,Rokycany,49489,7742,všeobecné praktické lékařství,32.0,Malý,0.009079872820117544
+432,Rokycany,49489,7742,praktické lékařství pro děti a dorost,14.0,Malý,0.009079872820117544
+433,Rokycany,49489,7742,chirurgie,5.0,Malý,0.009079872820117544
+434,Rokycany,49489,7742,Optometrista,2.0,Malý,0.009079872820117544
+435,Rokycany,49489,7742,ortopedie a traumatologie pohybového ústrojí,4.0,Malý,0.009079872820117544
+436,Rokycany,49489,7742,kardiologie,2.0,Malý,0.009079872820117544
+437,Rokycany,49489,7742,dětské lékařství,1.0,Malý,0.009079872820117544
+438,Rychnov nad Kněžnou,79333,12672,praktické lékařství pro děti a dorost,21.0,Malý,0.032083245013970516
+439,Rychnov nad Kněžnou,79333,12672,zubní lékařství,31.0,Malý,0.032083245013970516
+440,Rychnov nad Kněžnou,79333,12672,všeobecné praktické lékařství,44.0,Malý,0.032083245013970516
+441,Rychnov nad Kněžnou,79333,12672,chirurgie,9.0,Malý,0.032083245013970516
+442,Rychnov nad Kněžnou,79333,12672,ortopedie a traumatologie pohybového ústrojí,10.0,Malý,0.032083245013970516
+443,Rychnov nad Kněžnou,79333,12672,Optometrista,5.0,Malý,0.032083245013970516
+444,Rychnov nad Kněžnou,79333,12672,kardiologie,3.0,Malý,0.032083245013970516
+445,Rychnov nad Kněžnou,79333,12672,dětské lékařství,2.0,Malý,0.032083245013970516
+446,Semily,73815,11521,všeobecné praktické lékařství,50.0,Malý,0.027830041429810194
+447,Semily,73815,11521,praktické lékařství pro děti a dorost,21.0,Malý,0.027830041429810194
+448,Semily,73815,11521,zubní lékařství,37.0,Malý,0.027830041429810194
+449,Semily,73815,11521,ortopedie a traumatologie pohybového ústrojí,15.0,Malý,0.027830041429810194
+450,Semily,73815,11521,chirurgie,17.0,Malý,0.027830041429810194
+451,Semily,73815,11521,Optometrista,1.0,Malý,0.027830041429810194
+452,Semily,73815,11521,kardiologie,5.0,Malý,0.027830041429810194
+453,Semily,73815,11521,dětské lékařství,3.0,Malý,0.027830041429810194
+454,Sokolov,87503,13761,ortopedie a traumatologie pohybového ústrojí,14.0,Malý,0.03838057616340688
+455,Sokolov,87503,13761,chirurgie,14.0,Malý,0.03838057616340688
+456,Sokolov,87503,13761,zubní lékařství,28.0,Malý,0.03838057616340688
+457,Sokolov,87503,13761,Optometrista,7.0,Malý,0.03838057616340688
+458,Sokolov,87503,13761,všeobecné praktické lékařství,46.0,Malý,0.03838057616340688
+459,Sokolov,87503,13761,praktické lékařství pro děti a dorost,20.0,Malý,0.03838057616340688
+460,Sokolov,87503,13761,dětské lékařství,3.0,Malý,0.03838057616340688
+461,Sokolov,87503,13761,kardiologie,2.0,Malý,0.03838057616340688
+462,Strakonice,70532,11062,ortopedie a traumatologie pohybového ústrojí,5.0,Malý,0.025299547162539744
+463,Strakonice,70532,11062,všeobecné praktické lékařství,45.0,Malý,0.025299547162539744
+464,Strakonice,70532,11062,zubní lékařství,39.0,Malý,0.025299547162539744
+465,Strakonice,70532,11062,kardiologie,2.0,Malý,0.025299547162539744
+466,Strakonice,70532,11062,chirurgie,8.0,Malý,0.025299547162539744
+467,Strakonice,70532,11062,Optometrista,9.0,Malý,0.025299547162539744
+468,Strakonice,70532,11062,praktické lékařství pro děti a dorost,14.0,Malý,0.025299547162539744
+469,Strakonice,70532,11062,dětské lékařství,3.0,Malý,0.025299547162539744
+470,Svitavy,104000,16422,praktické lékařství pro děti a dorost,35.0,Stredný,0.05109625204740341
+471,Svitavy,104000,16422,všeobecné praktické lékařství,67.0,Stredný,0.05109625204740341
+472,Svitavy,104000,16422,zubní lékařství,38.0,Stredný,0.05109625204740341
+473,Svitavy,104000,16422,ortopedie a traumatologie pohybového ústrojí,11.0,Stredný,0.05109625204740341
+474,Svitavy,104000,16422,Optometrista,7.0,Stredný,0.05109625204740341
+475,Svitavy,104000,16422,kardiologie,5.0,Stredný,0.05109625204740341
+476,Svitavy,104000,16422,chirurgie,15.0,Stredný,0.05109625204740341
+477,Svitavy,104000,16422,dětské lékařství,7.0,Stredný,0.05109625204740341
+478,Tachov,54389,8541,všeobecné praktické lékařství,32.0,Malý,0.012856729935446575
+479,Tachov,54389,8541,Optometrista,4.0,Malý,0.012856729935446575
+480,Tachov,54389,8541,kardiologie,2.0,Malý,0.012856729935446575
+481,Tachov,54389,8541,zubní lékařství,23.0,Malý,0.012856729935446575
+482,Tachov,54389,8541,ortopedie a traumatologie pohybového ústrojí,4.0,Malý,0.012856729935446575
+483,Tachov,54389,8541,chirurgie,6.0,Malý,0.012856729935446575
+484,Tachov,54389,8541,praktické lékařství pro děti a dorost,12.0,Malý,0.012856729935446575
+485,Tachov,54389,8541,dětské lékařství,1.0,Malý,0.012856729935446575
+486,Teplice,128830,20317,všeobecné praktické lékařství,61.0,Veľký,0.07023489738895847
+487,Teplice,128830,20317,zubní lékařství,59.0,Veľký,0.07023489738895847
+488,Teplice,128830,20317,praktické lékařství pro děti a dorost,24.0,Veľký,0.07023489738895847
+489,Teplice,128830,20317,ortopedie a traumatologie pohybového ústrojí,19.0,Veľký,0.07023489738895847
+490,Teplice,128830,20317,Optometrista,10.0,Veľký,0.07023489738895847
+491,Teplice,128830,20317,chirurgie,15.0,Veľký,0.07023489738895847
+492,Teplice,128830,20317,kardiologie,5.0,Veľký,0.07023489738895847
+493,Teplice,128830,20317,dětské lékařství,3.0,Veľký,0.07023489738895847
+494,Trutnov,117414,17984,všeobecné praktické lékařství,71.0,Stredný,0.061435591097408225
+495,Trutnov,117414,17984,Optometrista,7.0,Stredný,0.061435591097408225
+496,Trutnov,117414,17984,chirurgie,29.0,Stredný,0.061435591097408225
+497,Trutnov,117414,17984,zubní lékařství,61.0,Stredný,0.061435591097408225
+498,Trutnov,117414,17984,praktické lékařství pro děti a dorost,35.0,Stredný,0.061435591097408225
+499,Trutnov,117414,17984,ortopedie a traumatologie pohybového ústrojí,16.0,Stredný,0.061435591097408225
+500,Trutnov,117414,17984,kardiologie,5.0,Stredný,0.061435591097408225
+501,Trutnov,117414,17984,dětské lékařství,7.0,Stredný,0.061435591097408225
+502,Tábor,102451,15907,zubní lékařství,93.0,Stredný,0.0499023027266596
+503,Tábor,102451,15907,Optometrista,13.0,Stredný,0.0499023027266596
+504,Tábor,102451,15907,všeobecné praktické lékařství,62.0,Stredný,0.0499023027266596
+505,Tábor,102451,15907,kardiologie,8.0,Stredný,0.0499023027266596
+506,Tábor,102451,15907,praktické lékařství pro děti a dorost,14.0,Stredný,0.0499023027266596
+507,Tábor,102451,15907,ortopedie a traumatologie pohybového ústrojí,13.0,Stredný,0.0499023027266596
+508,Tábor,102451,15907,chirurgie,12.0,Stredný,0.0499023027266596
+509,Tábor,102451,15907,dětské lékařství,11.0,Stredný,0.0499023027266596
+510,Třebíč,110337,16550,praktické lékařství pro děti a dorost,50.0,Stredný,0.05598073032084016
+511,Třebíč,110337,16550,všeobecné praktické lékařství,140.0,Stredný,0.05598073032084016
+512,Třebíč,110337,16550,zubní lékařství,55.0,Stredný,0.05598073032084016
+513,Třebíč,110337,16550,Optometrista,14.0,Stredný,0.05598073032084016
+514,Třebíč,110337,16550,ortopedie a traumatologie pohybového ústrojí,10.0,Stredný,0.05598073032084016
+515,Třebíč,110337,16550,kardiologie,6.0,Stredný,0.05598073032084016
+516,Třebíč,110337,16550,chirurgie,11.0,Stredný,0.05598073032084016
+517,Třebíč,110337,16550,dětské lékařství,7.0,Stredný,0.05598073032084016
+518,Uherské Hradiště,141630,21263,všeobecné praktické lékařství,104.0,Veľký,0.08010097311879757
+519,Uherské Hradiště,141630,21263,praktické lékařství pro děti a dorost,31.0,Veľký,0.08010097311879757
+520,Uherské Hradiště,141630,21263,zubní lékařství,109.0,Veľký,0.08010097311879757
+521,Uherské Hradiště,141630,21263,Optometrista,8.0,Veľký,0.08010097311879757
+522,Uherské Hradiště,141630,21263,ortopedie a traumatologie pohybového ústrojí,8.0,Veľký,0.08010097311879757
+523,Uherské Hradiště,141630,21263,chirurgie,15.0,Veľký,0.08010097311879757
+524,Uherské Hradiště,141630,21263,kardiologie,6.0,Veľký,0.08010097311879757
+525,Uherské Hradiště,141630,21263,dětské lékařství,5.0,Veľký,0.08010097311879757
+526,Vsetín,142703,22182,ortopedie a traumatologie pohybového ústrojí,22.0,Veľký,0.08092802774833799
+527,Vsetín,142703,22182,všeobecné praktické lékařství,92.0,Veľký,0.08092802774833799
+528,Vsetín,142703,22182,kardiologie,10.0,Veľký,0.08092802774833799
+529,Vsetín,142703,22182,praktické lékařství pro děti a dorost,38.0,Veľký,0.08092802774833799
+530,Vsetín,142703,22182,zubní lékařství,89.0,Veľký,0.08092802774833799
+531,Vsetín,142703,22182,Optometrista,7.0,Veľký,0.08092802774833799
+532,Vsetín,142703,22182,chirurgie,13.0,Veľký,0.08092802774833799
+533,Vsetín,142703,22182,dětské lékařství,4.0,Veľký,0.08092802774833799
+534,Vyškov,92735,15751,zubní lékařství,34.0,Malý,0.04241333461797861
+535,Vyškov,92735,15751,ortopedie a traumatologie pohybového ústrojí,8.0,Malý,0.04241333461797861
+536,Vyškov,92735,15751,všeobecné praktické lékařství,54.0,Malý,0.04241333461797861
+537,Vyškov,92735,15751,praktické lékařství pro děti a dorost,19.0,Malý,0.04241333461797861
+538,Vyškov,92735,15751,chirurgie,6.0,Malý,0.04241333461797861
+539,Vyškov,92735,15751,Optometrista,11.0,Malý,0.04241333461797861
+540,Vyškov,92735,15751,dětské lékařství,7.0,Malý,0.04241333461797861
+541,Vyškov,92735,15751,kardiologie,1.0,Malý,0.04241333461797861
+542,Zlín,190960,29213,zubní lékařství,147.0,Veľký,0.11812390403699778
+543,Zlín,190960,29213,všeobecné praktické lékařství,129.0,Veľký,0.11812390403699778
+544,Zlín,190960,29213,kardiologie,14.0,Veľký,0.11812390403699778
+545,Zlín,190960,29213,chirurgie,27.0,Veľký,0.11812390403699778
+546,Zlín,190960,29213,ortopedie a traumatologie pohybového ústrojí,21.0,Veľký,0.11812390403699778
+547,Zlín,190960,29213,praktické lékařství pro děti a dorost,30.0,Veľký,0.11812390403699778
+548,Zlín,190960,29213,Optometrista,13.0,Veľký,0.11812390403699778
+549,Zlín,190960,29213,dětské lékařství,31.0,Veľký,0.11812390403699778
+550,Znojmo,114552,18220,všeobecné praktické lékařství,92.0,Stredný,0.05922959822718952
+551,Znojmo,114552,18220,Optometrista,9.0,Stredný,0.05922959822718952
+552,Znojmo,114552,18220,zubní lékařství,63.0,Stredný,0.05922959822718952
+553,Znojmo,114552,18220,chirurgie,11.0,Stredný,0.05922959822718952
+554,Znojmo,114552,18220,ortopedie a traumatologie pohybového ústrojí,10.0,Stredný,0.05922959822718952
+555,Znojmo,114552,18220,kardiologie,5.0,Stredný,0.05922959822718952
+556,Znojmo,114552,18220,praktické lékařství pro děti a dorost,20.0,Stredný,0.05922959822718952
+557,Znojmo,114552,18220,dětské lékařství,7.0,Stredný,0.05922959822718952
+558,Ústí nad Labem,118651,19484,všeobecné praktické lékařství,63.0,Stredný,0.06238905482223721
+559,Ústí nad Labem,118651,19484,ortopedie a traumatologie pohybového ústrojí,31.0,Stredný,0.06238905482223721
+560,Ústí nad Labem,118651,19484,kardiologie,20.0,Stredný,0.06238905482223721
+561,Ústí nad Labem,118651,19484,zubní lékařství,62.0,Stredný,0.06238905482223721
+562,Ústí nad Labem,118651,19484,chirurgie,23.0,Stredný,0.06238905482223721
+563,Ústí nad Labem,118651,19484,Optometrista,8.0,Stredný,0.06238905482223721
+564,Ústí nad Labem,118651,19484,praktické lékařství pro děti a dorost,25.0,Stredný,0.06238905482223721
+565,Ústí nad Labem,118651,19484,dětské lékařství,9.0,Stredný,0.06238905482223721
+566,Ústí nad Orlicí,138011,22266,praktické lékařství pro děti a dorost,28.0,Veľký,0.07731149436361885
+567,Ústí nad Orlicí,138011,22266,všeobecné praktické lékařství,80.0,Veľký,0.07731149436361885
+568,Ústí nad Orlicí,138011,22266,zubní lékařství,54.0,Veľký,0.07731149436361885
+569,Ústí nad Orlicí,138011,22266,chirurgie,31.0,Veľký,0.07731149436361885
+570,Ústí nad Orlicí,138011,22266,ortopedie a traumatologie pohybového ústrojí,23.0,Veľký,0.07731149436361885
+571,Ústí nad Orlicí,138011,22266,kardiologie,4.0,Veľký,0.07731149436361885
+572,Ústí nad Orlicí,138011,22266,Optometrista,8.0,Veľký,0.07731149436361885
+573,Ústí nad Orlicí,138011,22266,dětské lékařství,3.0,Veľký,0.07731149436361885
+574,Česká Lípa,102998,16740,zubní lékařství,51.0,Stredný,0.05032392330667695
+575,Česká Lípa,102998,16740,Optometrista,3.0,Stredný,0.05032392330667695
+576,Česká Lípa,102998,16740,všeobecné praktické lékařství,49.0,Stredný,0.05032392330667695
+577,Česká Lípa,102998,16740,praktické lékařství pro děti a dorost,25.0,Stredný,0.05032392330667695
+578,Česká Lípa,102998,16740,chirurgie,12.0,Stredný,0.05032392330667695
+579,Česká Lípa,102998,16740,ortopedie a traumatologie pohybového ústrojí,9.0,Stredný,0.05032392330667695
+580,Česká Lípa,102998,16740,kardiologie,4.0,Stredný,0.05032392330667695
+581,Česká Lípa,102998,16740,dětské lékařství,3.0,Stredný,0.05032392330667695
+582,České Budějovice,196602,32988,všeobecné praktické lékařství,111.0,Veľký,0.12247268522979092
+583,České Budějovice,196602,32988,zubní lékařství,15.0,Veľký,0.12247268522979092
+584,České Budějovice,196602,32988,Optometrista,16.0,Veľký,0.12247268522979092
+585,České Budějovice,196602,32988,ortopedie a traumatologie pohybového ústrojí,19.0,Veľký,0.12247268522979092
+586,České Budějovice,196602,32988,chirurgie,28.0,Veľký,0.12247268522979092
+587,České Budějovice,196602,32988,praktické lékařství pro děti a dorost,40.0,Veľký,0.12247268522979092
+588,České Budějovice,196602,32988,kardiologie,10.0,Veľký,0.12247268522979092
+589,České Budějovice,196602,32988,dětské lékařství,24.0,Veľký,0.12247268522979092
+590,Český Krumlov,61320,10060,všeobecné praktické lékařství,41.0,Malý,0.018199055785721167
+591,Český Krumlov,61320,10060,praktické lékařství pro děti a dorost,35.0,Malý,0.018199055785721167
+592,Český Krumlov,61320,10060,Optometrista,6.0,Malý,0.018199055785721167
+593,Český Krumlov,61320,10060,chirurgie,8.0,Malý,0.018199055785721167
+594,Český Krumlov,61320,10060,zubní lékařství,37.0,Malý,0.018199055785721167
+595,Český Krumlov,61320,10060,ortopedie a traumatologie pohybového ústrojí,3.0,Malý,0.018199055785721167
+596,Český Krumlov,61320,10060,dětské lékařství,6.0,Malý,0.018199055785721167
+597,Český Krumlov,61320,10060,kardiologie,2.0,Malý,0.018199055785721167
+598,Šumperk,119967,18604,zubní lékařství,67.0,Stredný,0.06340341073321129
+599,Šumperk,119967,18604,všeobecné praktické lékařství,76.0,Stredný,0.06340341073321129
+600,Šumperk,119967,18604,Optometrista,7.0,Stredný,0.06340341073321129
+601,Šumperk,119967,18604,ortopedie a traumatologie pohybového ústrojí,16.0,Stredný,0.06340341073321129
+602,Šumperk,119967,18604,chirurgie,13.0,Stredný,0.06340341073321129
+603,Šumperk,119967,18604,kardiologie,6.0,Stredný,0.06340341073321129
+604,Šumperk,119967,18604,praktické lékařství pro děti a dorost,29.0,Stredný,0.06340341073321129
+605,Šumperk,119967,18604,dětské lékařství,5.0,Stredný,0.06340341073321129
+606,Žďár nad Sázavou,117941,18948,všeobecné praktické lékařství,133.0,Stredný,0.0618417959340977
+607,Žďár nad Sázavou,117941,18948,ortopedie a traumatologie pohybového ústrojí,16.0,Stredný,0.0618417959340977
+608,Žďár nad Sázavou,117941,18948,zubní lékařství,59.0,Stredný,0.0618417959340977
+609,Žďár nad Sázavou,117941,18948,praktické lékařství pro děti a dorost,68.0,Stredný,0.0618417959340977
+610,Žďár nad Sázavou,117941,18948,Optometrista,10.0,Stredný,0.0618417959340977
+611,Žďár nad Sázavou,117941,18948,chirurgie,10.0,Stredný,0.0618417959340977
+612,Žďár nad Sázavou,117941,18948,kardiologie,7.0,Stredný,0.0618417959340977
+613,Žďár nad Sázavou,117941,18948,dětské lékařství,12.0,Stredný,0.0618417959340977
