@@ -1,0 +1,49 @@
+﻿<!-- Autor: Petr Volf, xvolfp00; Monika Rosinská, xrosin00
+    ITU projekt
+    8. 12. 2019-->
+    <Window x:Class="ITUCalendar.EventWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ITUCalendar"
+        mc:Ignorable="d"
+        Title="EventWindow" Height="250" Width="300" MinHeight="250" MinWidth="300" AllowsTransparency="True" WindowStyle="None" Background="Transparent" ResizeMode="CanResizeWithGrip">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="{Binding ActualHeight, ElementName=Header}"/>
+    </WindowChrome.WindowChrome>
+    <Grid Background="#66000000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="Header">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+
+            <Button WindowChrome.IsHitTestVisibleInChrome="True" Style="{StaticResource HeaderButton}" Content="&#xf303;" FontFamily="{StaticResource FontAwesomeSolid}"/>
+            <Button WindowChrome.IsHitTestVisibleInChrome="True" Style="{StaticResource HeaderButton}" Grid.Column="2" Content="&#xf2ed;" Click="DeleteEvent" FontFamily="{StaticResource FontAwesomeSolid}"/>
+            <Button WindowChrome.IsHitTestVisibleInChrome="True" Style="{StaticResource HeaderButton}" Grid.Column="3" Content="&#xf00d;" Click="CloseWindow" FontFamily="{StaticResource FontAwesomeSolid}"/>
+        </Grid>
+        <StackPanel Grid.Row="1" Margin="10">
+            <TextBox Text="{Binding Item1.Name}" FontSize="28" Foreground="White" FontFamily="{DynamicResource Overpass}" SelectionBrush="#7F0078D7" BorderBrush="{x:Null}" Background="{x:Null}" TextChanged="EventNameChanged"/>
+            <TextBox Text="{Binding Item1.Description}" FontFamily="{DynamicResource Overpass}" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="White" TextChanged="EventInfoChanged">
+
+            </TextBox>
+            <ComboBox x:Name="CalendarChoice" Background="{x:Null}" FontFamily="{DynamicResource Overpass}" FontSize="20" SelectionChanged="CalendarChoice_SelectionChanged" Foreground="{Binding Item1.Color}" HorizontalAlignment="Left" Margin="0,5,0,0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="{Binding Item1.StartDate, StringFormat='{}Začátek: {0:  dd. MM. yyyy, HH:mm }'}" Foreground="White" FontFamily="{DynamicResource Overpass}" FontSize="14" Margin="0,5,0,0"/>
+            <TextBlock Text="{Binding Item1.EndDate, StringFormat='{}Konec: {0:  dd. MM. yyyy, HH:mm }'}" Foreground="White" FontFamily="{DynamicResource Overpass}" FontSize="14" Margin="0,5,0,0"/>
+            <CheckBox Content="Celodenní" Foreground="White" FontFamily="{DynamicResource Overpass}" IsChecked="{Binding Item1.IsEntireDay}" Margin="0,5,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

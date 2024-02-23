@@ -1,0 +1,17 @@
+﻿<!-- Petr Volf, xvolfp00 -->
+<Application x:Class="ITUCalendar.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ITUCalendar">
+    <Application.Resources>
+        <ResourceDictionary>
+            <FontFamily x:Key="FontAwesomeRegular">./Fonts/FontAwesomeRegular.otf#Font Awesome 5 Free Regular</FontFamily>
+            <FontFamily x:Key="FontAwesomeSolid">./Fonts/FontAwesomeSolid.otf#Font Awesome 5 Free Solid</FontFamily>
+            <FontFamily x:Key="Overpass">./Fonts/Overpass.otf#Overpass</FontFamily>
+            <local:BoolToVisibility x:Key="BoolToVisibility"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MonthViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

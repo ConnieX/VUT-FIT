@@ -1,0 +1,35 @@
+#### Stručně odpovězte na následující otázky: ######
+
+1. Proč je nutné určovat, zda má výpočet pokračovat?
+==============================================================================
+Aby procesor zbytečně netrávil čas počítáním nepotřebných hodnot, když už může provádět výpočty v další potřebné části.
+V line se i s použitím redukce výpočet značně zpomalil, proto moje implementace výpočet takto neukončuje (samozřejmě se toto vztahuje pouze k mé implementaci).
+V batch naopak určení, že všechny potřebné hodnoty jsou vypočítány a stím související a ukončení výpočtu, výpočet značně urychlilo.
+
+
+2. Byla "Line" vektorizace efektivní? Proč?
+==============================================================================
+Line vektorizace byla méně efektivní než batch vektorizace, ale stále jsme výpočet značně zrychlili - line implementace je 3x rychlejší než referenční řešení. (osobně si také myslím, že implementace batch se mi příliš nepovedla, a proto není rozdíl mezi line a batch nijak markantní). Z pohledu výpočtů, než je dosaženo limitu, není implementace line efektivní.
+Line implementace vypočítává mandelbrotovu množinu po řádcích. Zato batch implementace vypočítává hodnoty mandelbrotovy množiny po úsecích, kdy k vypočítání hodnoty dojde u všech právě počítaných "pixelech" mnohem častěji než když je počítáme pro celé řádky. Proto batch implementaci nepočítáme takové množství "zbytečných" hodnot, které již nepotřebujeme, protože se můžeme dříve přesunout na další úsek. (respektive pro případ, kdy bych v line implementaci používala ukončení výpočtu, což jsem ale odstranila pro urychlení výpočtu, jak jsem již zmínila). 
+
+3. Jaká byla dosažena výkonnost v Intel Advisoru pro jednotlivé implementace 
+(v GFLOPS)?
+==============================================================================
+ref: 2.22
+line: 38.37
+batch: 13.93
+
+
+4. Jaká část kódu byla paralizována v "Line" implementaci? Vyčteme tuto 
+informaci i u batch kalkulátoru?
+==============================================================================
+V line implementaci byl vektorizován nejvnitřnější cyklus for.
+Ano, vyčteme ji i u batch implementace.
+
+
+5. Co vyčteme z Roofline modelu pro obě vektorizované implementace?
+==============================================================================
+Line vektorizace se rychlost přístupu do paměti blíží rychlosti L2 cache, rychlost výpočtu, kde dosahuje téměř k DP Vector Add Peek.
+Batch vektorizace má oproti line vektorizaci horší výsledky, i když je ve skutečnosti o něco rychlejší. Rychlost přístupu do paměti je něco mezi L2 a L3 cache a dosahuje cca 0.6x rychlosti výpočtu DP Vector And Peek.
+
+

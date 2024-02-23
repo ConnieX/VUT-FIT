@@ -1,0 +1,34 @@
+FLP funkcionální projekt: Haskell
+
+Projekt pro převedení gramatiky do gramatiky bez jednoduchých pravidel a do CNF gramatiky.
+
+Přeložení projektu: make
+Spuštení projektu ./flp21-fun activity <file>
+activity:
+    -i - vypíše uloženou gramatiku
+    -1 - převede gramatiku do gramatiky bez jednoduchých pravidel a vypíše ji
+    -2 - převede gramatiku do CNF a vypíše ji
+
+Formát vstupu:
+neterminály oddělené čárkou
+terminály oddělené čárkou
+počáteční neterminál
+pravidlo1
+pravidlo2
+...
+pravidlo n
+
+Příklad vstupu:
+S,A
+a
+S->A
+A->a
+
+Program očekává validní vstup.
+
+Soubory obsahující kód řešení:
+- Main.hs - hlavní běh programu; zpracovává argumenty, zpracovává vstup
+- Grammars.hs - definuje datový typ Grammar a Rule
+- SaveGrammar.hs - zajišťuje parsování vstupu a uložení gramatiky to vnitřní interpretace
+- GrammarsWithoutSimpleRules.hs - obsahuje funkce pro převod gramatiky do gramatiky bez jednoduchých pravidel
+- GrammarsToCNF.hs - obsahuje funkce pro převod gramatiky bez jednoduchých pravidel do CNF

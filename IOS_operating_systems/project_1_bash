@@ -1,0 +1,264 @@
+#! /bin/sh
+
+#Autor: Monika Rosinska, VUT FIT, xrosin00 
+#Date: 29.3.2019
+#Version: 2.5
+
+export POSSIXLY_CORRECT
+
+filter_a="." #filter -a DATETIME
+filter_b="." #filter -b DATETIME
+filter_ip="." #filter -ip IPADDR
+filter_uri="."  #filter -uri URI
+filter="0"
+comm="." #command (one of expected)
+prev_comm="." #previous comm - in case of arg -a/-b/-ip/-uri
+logs="" #given logs separated by ' '
+lines="" #filtred lines separated by end of line
+
+uname=$(uname)
+get_date=""
+
+if [ "$uname" = "FreeBSD" ]; 
+then
+    get_date="gdate"
+else
+    get_date="date"
+fi
+
+get_log(){
+    for word in $logs
+    do
+        if [ -z "${word##*".gz"}" ]
+        then
+            gunzip -c $word
+        elif [ ! -f "$word" ] #can we open the file?
+        then
+            echo "File " "$word" " does not exist."
+            exit 1
+        else
+            cat $word
+        fi
+    done
+}
+
+list_ip(){
+    echo "$lines" | cut -d' ' -f1 | sort | uniq | grep -v "^$"
+}
+
+ips_for_hist(){
+    DONE=false
+        echo "$lines" |
+        until $DONE
+        do
+            read -r line || DONE=true
+            echo "$line" | cut -d' ' -f1
+
+        done
+}
+
+sort_host(){
+    list_hosts | sort | uniq | grep -v "^$"
+}
+
+list_hosts(){
+    ips=$(list_ip)
+
+   printf %s "$ips" |
+        while read -r line
+            do
+            if [ "$line" != '' ]
+            then 
+               domain=$(host "$line")
+                if [ -z "${domain##*"not found"*}" ]
+                then
+                    printf "$line"
+                else
+                    printf "$domain" | cut -d' ' -f5
+                fi 
+            fi           
+        done
+}
+
+sort_uri(){
+    list_uri | sort | uniq | grep -v "^$"
+}
+
+list_uri(){
+    echo "$lines" | cut -d'"' -f2 | cut -d' ' -f2- | cut -d' ' -f1 | cut -d'-' -f1
+}
+
+hist_ip(){
+    ips_for_hist | sort -n | uniq -c | awk '{$1=$1};1' | sort -k 1 -r |
+        while read -r line
+        do
+            chars=""
+            i=0
+            count=$(echo "$line" | cut -d ' ' -f1)
+            while [ $i -lt "$count" ]
+            do
+                chars="$chars"#
+                i=$((i + 1))
+            done
+                printf "%s (%s): %s\n" "$(echo "$line" | cut -d ' ' -f2)" "$count" "$chars"
+        done  
+}
+
+# hist_load(){
+# }
+
+call_comm(){
+    if [ "$comm" != "." ] #if comm is not empty
+    then
+        case $comm in
+            list-ip)
+                list_ip
+                ;;
+            list-hosts)
+                sort_hosts
+                ;;
+            list-uri)
+                sort_uri
+                ;;
+            hist-ip)
+                hist_ip
+                ;;
+          #  hist-load)
+             #   hist_load
+             #   ;;
+        esac
+    else
+        printf "$lines"
+    fi
+}
+
+filter_after(){
+    if [ "$filter_a" = "." ]
+    then
+        get_log |
+        while read -r line
+        do
+            filter_before
+        done
+    else
+        filter=1
+        get_log |
+        while read -r line
+        do 
+            curr_date=$(echo "$line" | cut -d'[' -f2 | cut -d' ' -f1 | tr / - | sed 's/:/ /')
+            curr_date=$($get_date -d"$curr_date" +%s)
+            if [ "$curr_date" -gt "$($get_date -d"$filter_a" +%s)" ]
+            then
+                filter_before
+            fi
+        done
+    fi
+}
+
+filter_before(){
+    if [ "$filter_b" = "." ]
+    then
+        filter_ips
+    else
+        filter=1
+        curr_date=$(echo"$line" | cut -d'[' -f2 | cut -d' ' -f1 | tr / - | sed 's/:/ /')
+        curr_date=$($get_date -d"$curr_date" +%s)
+        if [ "$curr_date" -lt "$($get_date -d"$filter_b" +%s)" ]
+        then
+            filter_ips
+        fi
+    fi
+}
+
+filter_ips(){
+    if [ "$filter_ip" = "." ]
+    then
+        filter_uris
+    else
+        filter=1
+        if [ "$filter_ip" = "$(list_ip)" ]
+        then
+            filter_uris
+        fi
+    fi
+}
+
+filter_uris(){
+    if [ "$filter_uri" = "." ]
+    then
+        echo "$line\n"
+    else
+        filter=1
+        if [ "$filter_uri" = "$(list_uri)" ]
+        then
+            echo "$line\n"
+        fi
+    fi
+    export lines
+}
+
+#"main"
+#parsing arguments
+for i in "$@" #for each arg
+do
+    if [ $prev_comm != "." ] #if some of -a/-b/-ip/-uri argument was given previous arg
+    then
+        case $prev_comm in
+            -a)
+                filter_a=$i
+                filter="1"
+                ;;
+            -b)
+                filter_b=$i
+                filter="1"
+                ;;
+            -ip)
+                filter_ip=$i
+                filter="1"
+                ;;
+            -uri)
+                filter_uri=$i
+                filter="1"
+                ;;
+            *)
+                echo "Unknow command: " $prev_comm
+            esac
+        prev_comm="." #setting prev_comm at "NULL" value - it's "empty" now
+
+    else
+        j=$(echo "$i" | cut -c1-1)
+        if [ "$j" = "-" ] #if first char is '-'
+        then
+            if [ $comm != "."  ] #|| [ $logs != " " ] #if comm and log was not given
+            then
+                echo "Please enter in order wana [FILTERS] [COMMANDS] [LOGS]."
+                prev_comm="0"
+            else
+                prev_comm=$i #after this arg goes value of this parameter
+            fi
+        else
+            case $i in
+                list-ip|list-hosts|list-uri|hist-ip|hist-load) #if it's some of commands
+                    if [ $comm = "." ] #if any command was not given (only one command can be given)
+                    then
+                        comm=$i
+                    else
+                       echo "Only one command can be given. If $i is file, please rename it."
+                    fi
+                    ;;
+                *)
+                    logs="$logs$i " #in any other agument it should be log; can be more logs, put it in one variable, separate it by ';'
+                    ;;
+            esac
+        fi
+    fi
+done
+
+#if any filters or commands was not given - only write the file at stdout
+if [ $filter = "0" ] && [ "$comm" = "." ] 
+then
+    get_log
+else #if comm or filters are not epmty
+    lines=$(filter_after)
+    call_comm
+fi

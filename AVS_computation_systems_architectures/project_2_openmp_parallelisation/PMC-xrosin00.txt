@@ -1,0 +1,73 @@
+Architektury Výpočetních Systémů (AVS 2021)
+Projekt č. 2 (PMC)
+Login: xrosin00
+
+Úloha 1: Paralelizace původního řešení
+===============================================================================
+
+1) Kterou ze smyček (viz zadání) je vhodnější paralelizovat a co způsobuje 
+   neefektivitu paralelizaci té druhé?
+   Je vhodnější paralelizovat smyčku ve funkci marchCubes. Neefektivitu paralelizace smyčky ve funkci evaluateFieldAt způsobuje časté přepínání kontextu (velké množství vláken, která vykonávají malé množství práce).
+
+2) Jaké plánování (rozdělení práce mezi vlákna) jste zvolili a proč? 
+   Jaký vliv má velikost "chunk" při dynamickém plánování (8, 16, 32, 64)?
+   
+   Zvolila jsem plánování guided, protože umožňuje lepší plánování než static, a bylo nám doporučeno nepoužívat dynamic.
+   Velikost chunk má mírný vliv na rychlost výpočtu. Nejrychleji výpočet probíhá při chunksize 64, poté pro chunksize 8, zbytek je mírně pomalejší.
+
+3) Jakým způsobem zajišťujete ukládání trojúhelníků z několika vláken současně?
+   Pomocí kritické sekce (#pragma omp critical).
+
+Úloha 2: Paralelní průchod stromem
+===============================================================================
+
+1) Stručně popište použití OpenMP tasků ve vašem řešení.
+	Před prvním volání rekurzivní funkce splitCube je zavolána pragma 'omp paralel'. Jedno vlákno poté poprvé zavolá zmíněnou funkci (pomocí pragmy 'omp single'). Hlavní výpočet funkce splitCube a rekurzvní volání této funkce je zpracováváno vlákny; to je zajištěno pragmou 'omp task'. Ukládání počtů trojúhelníku je zabezpečeno pomocí pragmy 'omp atomic update'. 
+
+2) Jakým způsobem jste realizovali sesbírání celkového počtu trojúhelníků?
+	Při každém zavolání funkce splitCube je vrácen počet nalezených trojúhelníků.
+	
+3) Jaký vliv má na vaše řešení tzv. "cut-off"? Je vhodné vytvářet nový 
+   task pro každou krychli na nejnižší úrovni?
+   Na běžných počítačích (např. na mém počítači) cut-off pro určitou hranici (1 nebo 2) zrychlí řešení, jinak je řešení pomalejší. Task pro každou krychli na nejnižší úrovni nemá smysl vytvářet, ale nezpomaluje to výpočet nijak extrémně.
+   Na barboře bylo nejrychleší řešení, které nepoužívalo cut-off.	
+
+4) Jakým způsobem zajišťujete ukládání trojúhelníků z několika vláken současně?
+	Aby se jednotlivá vlákna nepřepisovala, je aktualizace hodnoty zajištěna pomocí 'omp atomic update'.
+
+
+Úloha 3: Grafy škálování všech řešení
+===============================================================================
+
+1) Stručně zhodnoťte efektivitu vytvořených řešení (na základě grafů škálování).
+	Řešení pomocí oktalovového stromu je ve většině případů rychlejší (vyjma případů pro input size 10 a 80). 
+
+2) V jakém případě (v závislosti na počtu bodů ve vstupním souboru a velikosti 
+   mřížky) bude vaše řešení 1. úlohy neefektivní? (pokud takový případ existuje)
+   Loop je neefektivní při velkém input size a začíná být neefektivní při grid size cca 2 na 20.
+
+3) Je (nebo není) stromový algoritmus efektivnější z pohledu slabého škálování 
+   vzhledem ke vstupu?
+   Ano, je efektivnější.
+
+Úloha 4: Analýza využití jader pomocí VTune
+================================================================================
+
+1) Jaké bylo průměrné využití jader pro všechny tři implementace s omezením na 
+   18 vláken? Na kolik procent byly využity?
+   
+   ref: 0.996, 2.8% (většinu dobyn a 1 jádře)
+   loop: 17.116, 47.5% (většinu doby běžel na 18 jádrech)
+   tree: 14.959, 41.6% (většinu doby běžel na 18 jádrech)
+
+2) Jaké bylo průměrné využití jader pro všechny tři implementace s využitím 
+   všech jader? Na kolik procent se podařilo využít obě CPU?
+   
+   ref:0.997, 2.8% (většinu doby na 1 jádře)
+   loop: 30.956, 86.0% (věžšinu doby na 36 jádrech)
+   tree: 23.024, 64% (větišnu doby na 33 jádrech)
+  
+
+3) Jaké jsou závěry z těchto měření?
+	Implementace loop lépe využívá dostupná jádra, ale implementace tree je rychlejší. 
+

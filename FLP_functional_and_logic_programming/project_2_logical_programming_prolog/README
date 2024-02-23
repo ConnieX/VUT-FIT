@@ -1,0 +1,25 @@
+FLP logický projekt: Prolog
+Autor: Monika Rosinská, xrosin00
+
+Projekt pro nalezení všech Hamiltonovských kružnic v grafu.
+Projekt získáva výsledky slepým prohledáváním zadaného grafu. Princip výpočtu je popsán komentáři nad jednotlivými klauzulemi. Klauzule pro čtení vstupu ze stdin byly převzaty z dokumentu input2.pl z wisu.
+
+Přeložení projektu: make
+Spuštení projektu ./flp21-log < file
+
+Program očekává validní vstup.
+Soubor má obsahovat seznam hran (každou hranu pouze v jednom směru) ve formátu:
+V1 V2
+V3 V4
+
+Soubory obsahující kód řešení:
+- flplog21.pl - zdrojový kód
+- Makefile
+- test_x.txt - příklady validních vstupních souborů (01 - 05)
+
+Doba trvání výpočtu vstupních souborů na Merlinovi:
+- test_01: 0,021 s
+- test_02: 0,022 s
+- test_03: 0,027 s
+- test_04: 0.022 s
+- test_05: 0.020 s

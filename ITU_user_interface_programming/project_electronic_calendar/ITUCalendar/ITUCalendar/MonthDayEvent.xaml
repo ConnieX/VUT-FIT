@@ -1,0 +1,19 @@
+﻿<!-- Petr Volf, xvolfp00 -->
+    <UserControl x:Class="ITUCalendar.MonthDayEvent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ITUCalendar"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="150">
+    <Button Padding="0" Click="OpenEventWindow">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding StartDate, StringFormat='HH:mm - '}" FontFamily="{DynamicResource Overpass}" Visibility="{Binding IsEntireDay, Converter={StaticResource BoolToVisibility}, ConverterParameter=true}"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Center" FontFamily="{DynamicResource Overpass}"/>
+        </StackPanel>
+        <Button.Background>
+            <SolidColorBrush Color="{Binding Color}"/>
+        </Button.Background>
+    </Button>
+</UserControl>
